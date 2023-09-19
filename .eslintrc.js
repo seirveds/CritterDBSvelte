@@ -7,5 +7,10 @@ module.exports = {
   rules: {
     // override/add rules settings here, such as:
     // 'svelte/rule-name': 'error'
-  }
+  },
+  settings: {
+    'svelte3/ignore-warnings': (warning) => {
+      return warning.code === 'a11y-click-events-have-key-events'
+    },
+  },
 };

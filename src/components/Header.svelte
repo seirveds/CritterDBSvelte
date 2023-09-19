@@ -10,8 +10,8 @@
         Dropdown
     } from 'sveltestrap';
 
-    export let dropdownSelection = "newhorizons";
-    export let dropdownText = "New horizons";
+    export let selectedGame = "newhorizons";
+    let dropdownText = "New horizons";
 
     let dropdownOptions = [
         {"value": "newhorizons", "text": "New Horizons"},
@@ -22,7 +22,7 @@
     ];
 
     function selectOption(option) {
-        dropdownSelection = option["value"];
+        selectedGame = option["value"];
         dropdownText = option["text"];
     };
 </script>
@@ -35,7 +35,7 @@
         <Dropdown nav setActiveFromChild>
         <DropdownToggle nav class="nav-link" caret> {dropdownText} </DropdownToggle>
         <DropdownMenu>
-            {#each dropdownOptions as option (option)}
+            {#each dropdownOptions as option}
                 <DropdownItem on:click={() => selectOption(option)}>
                 {option["text"]}
                 </DropdownItem>

@@ -3,15 +3,13 @@
 	import Filters from "./components/Filters.svelte";
 	import Header from "./components/Header.svelte";
 
-	let dropdownSelection;
+	let selectedGame;
 	let filters;
 </script>
 
 
-<Header bind:dropdownSelection/>
+<Header bind:selectedGame/>
 
+<CritterContainer bind:selectedGame bind:filters/>
 
-<Filters bind:filters/>
-
-<CritterContainer bind:dropdownSelection bind:filters/>
-
+<Filters bind:selectedGame bind:filters/>
