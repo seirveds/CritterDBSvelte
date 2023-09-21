@@ -3,7 +3,7 @@
         Modal,
         ModalBody,
     } from "sveltestrap";
-    import critters from "../assets/critters.json";
+    import critters from "../assets/critters2.json";
 
     export let selectedGame = "newhorizons";
     export let filters = {
@@ -11,6 +11,18 @@
     };
 
     const bellIcon = "icons/bellbag.png";
+
+    const rowCounts = {
+        "newhorizons": 5,
+        "newleaf": 3,
+        "cityfolk": 1,
+        "wildworld": 1,
+        "animalcrossing": 5,
+    }
+
+    // Used in automatically scaling grid container
+    $: rows = rowCounts[selectedGame];
+    $: columns = Math.ceil(critters[selectedGame][filters.crittertype].length / rowCounts[selectedGame]);
 
     let modalOpen = false;
     let modalName;
@@ -23,7 +35,6 @@
     let modalSize;
 
     function toggleModal(critter) {
-        console.log(critter.months_available);
         if (!modalOpen) {
             modalName = critter.name;
             modalImage = prepareImage(critter.b64_img);
@@ -140,7 +151,7 @@
 
 <p>{JSON.stringify(filters)}</p>
 
-<div class="container">
+<div class="gridcontainer" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
     {#each critters[selectedGame][filters.crittertype] as critter}
         <div class="tile">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -182,11 +193,6 @@
 </Modal>
 
 <style>
-    .row {
-        display: flex;
-        flex-direction: row;
-    }
-
     .col {
         display: flex;
         flex-direction: column;
@@ -194,10 +200,9 @@
         white-space: nowrap;
     }
 
-    .container {
+    .gridcontainer {
         display: grid;
-        grid-template-columns: repeat(16, 1fr);
-        grid-template-rows: repeat(5, 1fr);
+        
         grid-column-gap: 0px;
         grid-row-gap: 0px;
         border-left: 1px solid black;
