@@ -8,7 +8,9 @@
     export let selectedGame = "newhorizons";
     export let filters = {
         "crittertype": "fish",
-    };
+        "month": 1,  // TODO current month
+        "time": 0,  // TODO current time
+    }
 
     const bellIcon = "icons/bellbag.png";
 
@@ -22,8 +24,20 @@
 
     // Used in automatically scaling grid container
     $: rows = rowCounts[selectedGame];
-    $: columns = Math.ceil(critters[selectedGame][filters.crittertype].length / rowCounts[selectedGame]);
+    $: columns = Math.ceil(filteredCritters.length / rowCounts[selectedGame]);
 
+    let filteredCritters = critters;
+
+    $: filterChange(selectedGame, filters);
+    function filterChange() {
+        let result = critters[selectedGame][filters.crittertype]
+        result = result.sort(function(a, b) {return a.num - b.num;});
+        result = result.map(obj => (
+            {...obj, active: obj.months_available.includes(filters.month)}  // TODO add time
+        ));
+        filteredCritters = result;
+    }
+    
     let modalOpen = false;
     let modalName;
     let modalImage;
@@ -152,13 +166,14 @@
 <p>{JSON.stringify(filters)}</p>
 
 <div class="gridcontainer" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
-    {#each critters[selectedGame][filters.crittertype] as critter}
+    {#each filteredCritters as critter}
         <div class="tile">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <img
                 src={prepareImage(critter.b64_img)}
                 alt={critter.name} class="critterImage"
                 on:click={toggleModal(critter)}
+                style={critter.active ? "" : "opacity: 0.1;"}
             />
         </div>
     {/each}
@@ -202,7 +217,7 @@
 
     .gridcontainer {
         display: grid;
-        
+        grid-auto-flow: column;
         grid-column-gap: 0px;
         grid-row-gap: 0px;
         border-left: 1px solid black;
