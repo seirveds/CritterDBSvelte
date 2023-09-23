@@ -42,6 +42,11 @@
         filters.all = bool;
     }
 
+    function ignoreTimeToggle() {
+        filters.ignoreTime = !filters.ignoreTime;
+        console.log(filters);
+    }
+
 
 </script>
 
@@ -66,10 +71,10 @@
 </TabContent>
 
 <div>
-    <button class={filters.all ? "active" : ""} on:click={() => {buttonClick(true)}}>
+    <button class={filters.all ? "filter-all-button active" : "filter-all-button"} on:click={() => {buttonClick(true)}}>
         <p>All</p>
     </button>
-    <button class={!filters.all ? "active" : ""} on:click={() => {buttonClick(false)}}>
+    <button class={!filters.all ? "filter-all-button active" : "filter-all-button"} on:click={() => {buttonClick(false)}}>
         <p>Current</p>
     </button>
 </div>
@@ -80,6 +85,7 @@
         <Input
         type="range"
         id="monthSelect"
+        class="range"
         min={1}
         max={12}
         step={1}
@@ -88,24 +94,27 @@
     </FormGroup>
 
     <FormGroup>
-        <Label for="timeSelect">{`${filters.time}:00`}</Label>
+        <Label for="timeSelect">{filters.ignoreTime ? "-" : `${filters.time}:00`}</Label>
         <Input
         type="range"
         id="timeSelect"
+        class="range"
         min={0}
         max={23}
         step={1}
         bind:value={filters.time}
+        disabled={filters.ignoreTime}
         />
     </FormGroup>
 {/if}
+
+<button class={filters.ignoreTime ? "active" : ""} on:click={ignoreTimeToggle}>
+    <p>Ignore time</p>
+</button>
 <style>
     button {
-        width: 5em;
-        height: 1.5em;
         border: none;
         background-color: rgba(0, 0, 0, 0);
-
     }
 
     button>p {
@@ -113,13 +122,27 @@
         padding: 0;
     }
 
+    .filter-all-button {
+        width: 5em;
+        height: 1.5em;
+    }
+
     .active {
         background-color: red;
-        border: 1px solid red;
+        border-radius: 500px; /* Large for pill look */
+    }
+
+    .filter-all-button:hover {
+        background-color: red;
         border-radius: 500px; /* Large for pill look */
     }
 
     button:hover {
         transform: scale(1.2);
+    }
+
+    /* sveltestrap workaround https://github.com/bestguy/sveltestrap/issues/338#issuecomment-881457461 */
+    :global(input.range) {
+        border: none;
     }
 </style>

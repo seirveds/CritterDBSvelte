@@ -6,10 +6,21 @@
 	export let selectedGame = "newhorizons";
 	export let filters = {
         "crittertype": "fish",
-        "month": 1,  // TODO current month
-        "time": 0,  // TODO current time
-        "all": true,
+        "month": currentMonth(),
+        "time": currentTime(),
+        "all": false,
+		"ignoreTime": false,
     };
+
+	function currentMonth() {
+		const d = new Date();
+		return d.getMonth() + 1;
+	}
+
+	function currentTime() {
+		const d = new Date();
+		return d.getHours();
+	}
 </script>
 
 

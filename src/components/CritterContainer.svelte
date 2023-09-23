@@ -13,8 +13,8 @@
     const rowCounts = {
         "newhorizons": 5,
         "newleaf": 3,
-        "cityfolk": 1,
-        "wildworld": 1,
+        "cityfolk": 4,
+        "wildworld": 4,
         "animalcrossing": 5,
     }
 
@@ -23,6 +23,17 @@
     $: columns = Math.ceil(filteredCritters.length / rowCounts[selectedGame]);
 
     let filteredCritters = critters;
+    
+    let modalOpen = false;
+
+    let modalName;
+    let modalImage;
+    let modalLocation;
+    let modalPrice;
+    let modalCatchQuote;
+    let modalTime;
+    let modalMonths;
+    let modalSize;
 
     $: filterChange(selectedGame, filters);
     function filterChange() {
@@ -33,23 +44,21 @@
         } else {
             // Active flag based on filters
             result = result.map(obj => (
-                {...obj, active: obj.months_available.includes(filters.month) & get(obj.time_available, filters.month, []).includes(filters.time)}
+                {...obj, active: filters.ignoreTime ? checkDate(obj) : checkDate(obj) & checkTime(obj)}
             ));
         }
         // Sort by in game order
         result = result.sort(function(a, b) {return a.num - b.num;});
         filteredCritters = result;
-    }
-    
-    let modalOpen = false;
-    let modalName;
-    let modalImage;
-    let modalLocation;
-    let modalPrice;
-    let modalCatchQuote;
-    let modalTime;
-    let modalMonths;
-    let modalSize;
+    };
+
+    function checkTime(obj) {
+        return get(obj.time_available, filters.month, []).includes(filters.time);
+    };
+
+    function checkDate(obj) {
+        return obj.months_available.includes(filters.month);
+    };
 
     function toggleModal(critter) {
         if (!modalOpen) {
@@ -73,7 +82,7 @@
 
     function prepareImage(base64String) {
         return `data:image/png;base64,${base64String}`
-    }
+    };
 
     function formatTimeAvailable(time_available) {
         // Assumes critters have same times every month (they usually do)
@@ -118,7 +127,7 @@
         }
         // Slice to remove trailing semicolon and space
         return outString.slice(0, -2);
-    }
+    };
 
     function formatMonthsAvailable(months_available) {
         // Easy case
@@ -165,7 +174,7 @@
         }        
 
         return monthRangeStrings.join('; ');
-    }
+    };
 
     function get(obj, key, default_) {
         if (key in obj) {
@@ -174,8 +183,6 @@
         return default_
     }
 </script>
-
-<p>{JSON.stringify(filters)}</p>
 
 <div class="gridcontainer" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
     {#each filteredCritters as critter}
