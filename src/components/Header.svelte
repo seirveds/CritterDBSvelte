@@ -10,7 +10,7 @@
         Dropdown
     } from 'sveltestrap';
 
-    export let selectedGame = "newhorizons";
+    export let selectedGame;
     let dropdownText = "New horizons";
 
     let dropdownOptions = [

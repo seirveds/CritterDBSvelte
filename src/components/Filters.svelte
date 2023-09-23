@@ -7,13 +7,8 @@
         Input,
     } from "sveltestrap";
 
-    export let filters = {
-        "crittertype": "fish",
-        "month": 1,  // TODO current month
-        "time": 0,  // TODO current time
-        "all": true,
-    };
-    export let selectedGame = "newhorizons";
+    export let filters;
+    export let selectedGame;
 
     const monthNames = {
         1: "January",

@@ -5,12 +5,8 @@
     } from "sveltestrap";
     import critters from "../assets/critters2.json";
 
-    export let selectedGame = "newhorizons";
-    export let filters = {
-        "crittertype": "fish",
-        "month": 1,  // TODO current month
-        "time": 0,  // TODO current time
-    }
+    export let selectedGame;
+    export let filters;
 
     const bellIcon = "icons/bellbag.png";
 

@@ -3,8 +3,13 @@
 	import Filters from "./components/Filters.svelte";
 	import Header from "./components/Header.svelte";
 
-	let selectedGame;
-	let filters;
+	export let selectedGame = "newhorizons";
+	export let filters = {
+        "crittertype": "fish",
+        "month": 1,  // TODO current month
+        "time": 0,  // TODO current time
+        "all": true,
+    };
 </script>
 
 
