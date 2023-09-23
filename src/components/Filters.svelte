@@ -4,13 +4,14 @@
         TabPane,
         FormGroup,
         Label,
-        Input
+        Input,
     } from "sveltestrap";
 
     export let filters = {
         "crittertype": "fish",
         "month": 1,  // TODO current month
         "time": 0,  // TODO current time
+        "all": true,
     };
     export let selectedGame = "newhorizons";
 
@@ -42,7 +43,13 @@
         filters.crittertype = tab;
     };
 
+    function buttonClick(bool) {
+        filters.all = bool;
+    }
+
+
 </script>
+
 <TabContent on:tab={(e) => (tabSwitch(e.detail))}>
     <TabPane tabId="fish" active>
         <span slot="tab">
@@ -63,26 +70,61 @@
     {/if}
 </TabContent>
 
-<FormGroup>
-    <Label for="monthSelect">{monthNames[filters.month]}</Label>
-    <Input
-      type="range"
-      id="monthSelect"
-      min={1}
-      max={12}
-      step={1}
-      bind:value={filters.month}
-    />
-</FormGroup>
+<div>
+    <button class={filters.all ? "active" : ""} on:click={() => {buttonClick(true)}}>
+        <p>All</p>
+    </button>
+    <button class={!filters.all ? "active" : ""} on:click={() => {buttonClick(false)}}>
+        <p>Current</p>
+    </button>
+</div>
 
-<FormGroup>
-    <Label for="timeSelect">{`${filters.time}:00`}</Label>
-    <Input
-      type="range"
-      id="timeSelect"
-      min={0}
-      max={23}
-      step={1}
-      bind:value={filters.time}
-    />
-</FormGroup>
+{#if !filters.all}
+    <FormGroup>
+        <Label for="monthSelect">{monthNames[filters.month]}</Label>
+        <Input
+        type="range"
+        id="monthSelect"
+        min={1}
+        max={12}
+        step={1}
+        bind:value={filters.month}
+        />
+    </FormGroup>
+
+    <FormGroup>
+        <Label for="timeSelect">{`${filters.time}:00`}</Label>
+        <Input
+        type="range"
+        id="timeSelect"
+        min={0}
+        max={23}
+        step={1}
+        bind:value={filters.time}
+        />
+    </FormGroup>
+{/if}
+<style>
+    button {
+        width: 5em;
+        height: 1.5em;
+        border: none;
+        background-color: rgba(0, 0, 0, 0);
+
+    }
+
+    button>p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .active {
+        background-color: red;
+        border: 1px solid red;
+        border-radius: 500px; /* Large for pill look */
+    }
+
+    button:hover {
+        transform: scale(1.2);
+    }
+</style>

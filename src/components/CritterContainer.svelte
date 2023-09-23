@@ -30,11 +30,18 @@
 
     $: filterChange(selectedGame, filters);
     function filterChange() {
-        let result = critters[selectedGame][filters.crittertype]
+        let result = critters[selectedGame][filters.crittertype];
+        if (filters.all) {
+            // Active flag always true
+            result = result.map(obj => ({...obj, active: true}));
+        } else {
+            // Active flag based on filters
+            result = result.map(obj => (
+                {...obj, active: obj.months_available.includes(filters.month) & get(obj.time_available, filters.month, []).includes(filters.time)}
+            ));
+        }
+        // Sort by in game order
         result = result.sort(function(a, b) {return a.num - b.num;});
-        result = result.map(obj => (
-            {...obj, active: obj.months_available.includes(filters.month) & get(obj.time_available, filters.month, []).includes(filters.time)}  // TODO add time
-        ));
         filteredCritters = result;
     }
     
