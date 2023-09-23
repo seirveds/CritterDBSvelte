@@ -33,7 +33,7 @@
         let result = critters[selectedGame][filters.crittertype]
         result = result.sort(function(a, b) {return a.num - b.num;});
         result = result.map(obj => (
-            {...obj, active: obj.months_available.includes(filters.month)}  // TODO add time
+            {...obj, active: obj.months_available.includes(filters.month) & get(obj.time_available, filters.month, []).includes(filters.time)}  // TODO add time
         ));
         filteredCritters = result;
     }
@@ -50,6 +50,8 @@
 
     function toggleModal(critter) {
         if (!modalOpen) {
+            console.log(critter);
+
             modalName = critter.name;
             modalImage = prepareImage(critter.b64_img);
             modalCatchQuote = critter.catching_quote;
@@ -160,6 +162,13 @@
         }        
 
         return monthRangeStrings.join('; ');
+    }
+
+    function get(obj, key, default_) {
+        if (key in obj) {
+            return obj[key]
+        }
+        return default_
     }
 </script>
 
