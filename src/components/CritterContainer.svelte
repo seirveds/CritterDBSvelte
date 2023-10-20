@@ -18,9 +18,9 @@
         "animalcrossing": 5,
     }
 
-    // Used in automatically scaling grid container
-    $: rows = rowCounts[selectedGame];
-    $: columns = Math.ceil(filteredCritters.length / rowCounts[selectedGame]);
+    // Default new horizons values
+    let rows = 5;
+    let columns = 16;
 
     let filteredCritters = critters;
     
@@ -50,6 +50,10 @@
         // Sort by in game order
         result = result.sort(function(a, b) {return a.num - b.num;});
         filteredCritters = result;
+
+        rows = rowCounts[selectedGame];
+        columns = Math.ceil(filteredCritters.length / rowCounts[selectedGame]);
+
     };
 
     function checkTime(obj) {
@@ -184,20 +188,21 @@
     }
 </script>
 
-<div class="gridcontainer" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
-    {#each filteredCritters as critter}
-        <div class="tile">
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <img
-                src={prepareImage(critter.b64_img)}
-                alt={critter.name} class="critterImage"
-                on:click={toggleModal(critter)}
-                style={critter.active ? "" : "opacity: 0.1;"}
-            />
-        </div>
-    {/each}
+<div class="grid-container">
+    <div class="grid" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
+        {#each filteredCritters as critter}
+            <div class="tile">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <img
+                    src={prepareImage(critter.b64_img)}
+                    alt={critter.name} class="critterImage"
+                    on:click={toggleModal(critter)}
+                    style={critter.active ? "" : "opacity: 0.1;"}
+                />
+            </div>
+        {/each}
+    </div>
 </div>
-
 <Modal isOpen={modalOpen} toggle={toggleModal}>
     <ModalBody>
         <div class="col">
@@ -234,7 +239,17 @@
         white-space: nowrap;
     }
 
-    .gridcontainer {
+    .grid-container {
+        display: flex;
+        justify-content: center;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        /* overflow-x: scroll;
+        overflow-y: hidden;
+        width: 100vw; */
+    }
+
+    .grid {
         display: grid;
         grid-auto-flow: column;
         grid-column-gap: 0px;
@@ -242,6 +257,8 @@
         border-left: 1px solid black;
         border-top: 1px solid black;
         padding: 0px;
+        column-gap: 0px;
+        width: fit-content;
     }
 
     .tile {

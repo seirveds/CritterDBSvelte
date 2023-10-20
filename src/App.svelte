@@ -3,6 +3,8 @@
 	import Filters from "./components/Filters.svelte";
 	import Header from "./components/Header.svelte";
 
+	import { currentMonth, currentTime} from "./utils"
+
 	export let selectedGame = "newhorizons";
 	export let filters = {
         "crittertype": "fish",
@@ -11,16 +13,6 @@
         "all": false,
 		"ignoreTime": false,
     };
-
-	function currentMonth() {
-		const d = new Date();
-		return d.getMonth() + 1;
-	}
-
-	function currentTime() {
-		const d = new Date();
-		return d.getHours();
-	}
 </script>
 
 
