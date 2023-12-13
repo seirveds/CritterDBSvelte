@@ -37,6 +37,11 @@
     };
 
     function buttonClick(bool) {
+        // Make sure clicking current resets time and month to now
+        if (!filters.all && !bool) {
+            filters.time = currentTime();
+            filters.month = currentMonth();
+        }
         filters.all = bool;
     }
 
@@ -146,7 +151,7 @@
         margin: 0;
         width: 100%;
         height: 15px;
-        border-radius: 5px;  
+        border-radius: 5px;
         background: #000000;
         outline: none;
         opacity: 0.4;
@@ -167,7 +172,7 @@
         appearance: none;
         width: 18px;
         height: 25px;
-        border-radius: 5px; 
+        border-radius: 5px;
         background: #ffffff;
         border: 3px solid #000000;
         cursor: pointer;
