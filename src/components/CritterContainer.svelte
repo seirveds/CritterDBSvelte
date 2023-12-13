@@ -205,7 +205,7 @@
 </div>
 <Modal isOpen={modalOpen} toggle={toggleModal}>
     <ModalBody>
-        <div class="col">
+        <div class="modal-body">
             <img src={modalImage} class="modalImage" alt={modalName}/>
             <h2>{modalName}</h2>
             <p><em>{modalCatchQuote}</em></p>
@@ -232,11 +232,12 @@
 </Modal>
 
 <style>
-    .col {
+    .modal-body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        white-space: nowrap;
+        text-align: center;
+        overflow-wrap: break-word;
     }
 
     .grid-container {
