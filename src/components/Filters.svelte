@@ -1,8 +1,4 @@
 <script>
-    import {
-        TabContent,
-        TabPane,
-    } from "sveltestrap";
     import { currentMonth, currentTime} from "../utils"
 
     export let filters;
@@ -23,26 +19,19 @@
         12: "December",
     };
 
-    $: selectedGameChange(selectedGame);
-    function selectedGameChange() {
-        // TODO find out way to switch to fish tab on game change
-        // This should prevent error when switching to a non
-        // sea creature game when on that tab
-        // Potential fix: https://github.com/bestguy/sveltestrap/issues/485
-        console.log("changed");
-    };
-
-    function tabSwitch(tab) {
-        filters.crittertype = tab;
-    };
-
-    function buttonClick(bool) {
+    function filterButtonClick(bool) {
         // Make sure clicking current resets time and month to now
+        // Also remove ignoreTime selection if true
         if (!filters.all && !bool) {
             filters.time = currentTime();
             filters.month = currentMonth();
+            filters.ignoreTime = false;
         }
         filters.all = bool;
+    }
+
+    function navButtonClick(crittertype) {
+        filters.crittertype = crittertype;
     }
 
     function ignoreTimeToggle() {
@@ -52,32 +41,23 @@
 
 </script>
 
-<TabContent on:tab={(e) => (tabSwitch(e.detail))}>
-    <TabPane tabId="fish" active>
-        <span slot="tab">
-            Fish
-        </span>
-    </TabPane>
-    <TabPane tabId="bug">
-        <span slot="tab">
-            Bugs
-        </span>
-    </TabPane>
-    {#if ["newhorizons", "newleaf"].includes(selectedGame)}
-        <TabPane tabId="sea_creature">
-            <span slot="tab">
-                Sea
-            </span>
-        </TabPane>
-    {/if}
-</TabContent>
+<div>
+    <div style="display: flex">
+        <button class={ filters.crittertype == "fish" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("fish")}}> Fish </button>
+        <button class={ filters.crittertype == "bug" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("bug")}}> Bugs </button>
+        {#if ["newhorizons", "newleaf"].includes(selectedGame)}
+            <button class={ filters.crittertype == "sea_creature" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("sea_creature")}}> Sea </button>
+        {/if}
+    </div>
+    <hr class="m-0">
+</div>
 
 <div class="pt-3">
     <div class="center">
-        <button class={filters.all ? "active" : ""} on:click={() => {buttonClick(true)}}>
+        <button class={filters.all ? "filterbutton active" : "filterbutton"} on:click={() => {filterButtonClick(true)}}>
             <h5 class="button-text">All</h5>
         </button>
-        <button class={!filters.all && currentTime() === filters.time && currentMonth() === filters.month && !filters.ignoreTime ? "active" : ""} on:click={() => {buttonClick(false)}}>
+        <button class={!filters.all && currentTime() === filters.time && currentMonth() === filters.month && !filters.ignoreTime ? "filterbutton active" : "filterbutton"} on:click={() => {filterButtonClick(false)}}>
             <h5 class="button-text">Current</h5>
         </button>
     </div>
@@ -95,7 +75,7 @@
         </div>
 
         <div class="center">
-            <button class={filters.ignoreTime ? "active" : ""} on:click={ignoreTimeToggle}>
+            <button class={filters.ignoreTime ? "filterbutton active" : "filterbutton"} on:click={ignoreTimeToggle}>
                 <h5>Ignore time</h5>
             </button>
         </div>
@@ -109,7 +89,7 @@
         text-align: center;
     }
 
-    button {
+    .filterbutton {
         border: none;
         background-color: rgba(0, 0, 0, 0);
         width: fit-content !important;
@@ -118,24 +98,24 @@
         padding: 4px 10px 4px 10px;
     }
 
-    button:hover {
+    .filterbutton:hover {
         transform: scale(1.1);
         background-color: rgb(0, 0, 0);
         border-radius: 500px; /* Large for pill look */
         color: white;
     }
 
-    button>h5 {
+    .filterbutton>h5 {
         margin: 0;
         padding: 0 10px 0 10px;
     }
 
-    .active {
+    .filterbutton.active {
         background-color: rgb(0, 0, 0);
         border-radius: 500px; /* Large for pill look */
     }
 
-    .active>h5 {
+    .filterbutton.active>h5 {
         color: white;
     }
 
@@ -186,4 +166,23 @@
         border: 3px solid #000000;
         cursor: pointer;
     }
+
+    .navbutton {
+        padding: .5em 2em .5em 2em;
+        border: none;
+        border-radius: 10px 10px 0 0;
+        background-color: #ffffff;
+        width: 6em;
+        text-align: center;
+    }
+
+    .navbutton.active {
+        border: 1px solid DarkGray;
+        border-bottom: none;
+    }
+
+    .navbutton:hover {
+        background-color: lightgray;
+    }
+
 </style>

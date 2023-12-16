@@ -18,6 +18,12 @@
         "animalcrossing": 5,
     }
 
+    const noSeacreatureGames = [
+        "cityfolk",
+        "wildworld",
+        "animalcrossing",
+    ]
+
     // Default new horizons values
     let rows = 5;
     let columns = 16;
@@ -37,6 +43,9 @@
 
     $: filterChange(selectedGame, filters);
     function filterChange() {
+        if ( noSeacreatureGames.includes(selectedGame) && filters.crittertype == "sea_creature") {
+            filters.crittertype = "fish";
+        }
         let result = critters[selectedGame][filters.crittertype];
         if (filters.all) {
             // Active flag always true
@@ -225,8 +234,8 @@
                     </div>
                 {/if}
             </div>
-            <p>{modalMonths}</p>
-            <p>{modalTime}</p>
+            <p class="nomargin">{modalMonths}</p>
+            <p class="nomargin">{modalTime}</p>
         </div>
     </ModalBody>
 </Modal>
@@ -293,5 +302,9 @@
     .icon {
         width: 24px;
         height: 24px;
+    }
+
+    .nomargin {
+        margin: 0;
     }
 </style>
