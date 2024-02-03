@@ -9,6 +9,7 @@
     export let filters;
 
     const bellIcon = "icons/bellbag.png";
+    const islandExclusive = "icons/tortimer-island-exclusive.png";
 
     const rowCounts = {
         "newhorizons": 5,
@@ -215,10 +216,10 @@
                     on:click={toggleModal(critter)}
                     style={critter.active ? "" : "opacity: 0.1;"}
                 />
+                {#if selectedGame === "newleaf" && critter.tortimer_island_exclusive}
+                    <img src={islandExclusive} alt="Tortimer island exclusive" style="position: absolute; top: 5px; right: 5px"/>
+                {/if}
             </div>
-            <!-- {#if critter.tortimer_island}
-                <p>T</p>
-            {/if} -->
         {/each}
     </div>
 </div>
@@ -282,6 +283,7 @@
     }
 
     .tile {
+        position: relative;
         width: 80px;
         height: 80px;
         border-right: 1px solid black;
