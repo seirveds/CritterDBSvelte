@@ -158,32 +158,33 @@
         // Sort the adjusted array in ascending order
         months_available.sort((a, b) => a - b);
 
+        console.log(months_available)
+
         let monthRanges = [];
-        let startMonth = monthNames[months_available[0]];
-        let endMonth = startMonth;
+        let rangeStartMonth = months_available[0];
 
         for (let i = 1; i < months_available.length; i++) {
-            const currentMonth = monthNames[months_available[i]];
-            if (months_available[i] === months_available[i - 1] + 1) {
-                endMonth = currentMonth;
-            } else {
-                monthRanges.push([startMonth, endMonth]);
-                startMonth = currentMonth;
-                endMonth = startMonth;
-            }
+            if (months_available[i] + 1 !== months_available[i + 1]) {
+                monthRanges.push([rangeStartMonth, months_available[i]]);
+                rangeStartMonth = months_available[i + 1]
+            } 
         }
 
-        monthRanges.push([startMonth, endMonth]);
 
         // Handle range that wraps around from december to january
-        // TODO not working (TEST BLUE MARLIN, BLOWFISH)
-        // if (monthRanges[0][0] === "January" && monthRanges[1][1] === "December") {
-        //     monthRanges = [[monthRanges[1][0], monthRanges[0][1]]]
-        // }
+        // Check if first month in first range is january and last month in
+        // last range is december. If this is the case replace december with the
+        // end month of the first range, and remove first range from array
+        // e.g. [[1, 2], [11, 12]] -> [[11, 2]]
+        if (monthRanges[0][0] === 1 && monthRanges[monthRanges.length - 1][1] === 12) {
+            monthRanges[monthRanges.length - 1][1] = monthRanges[0][1]
+            monthRanges.splice(0, 1)
+        }
 
+        // Transform month indices to month name strings
         let monthRangeStrings = []
         for (let i = 0; i < monthRanges.length; i++) {
-            monthRangeStrings.push(`${monthRanges[i][0]} - ${monthRanges[i][1]}`)
+            monthRangeStrings.push(`${monthNames[monthRanges[i][0]]} - ${monthNames[monthRanges[i][1]]}`)
         }        
 
         return monthRangeStrings.join('; ');
