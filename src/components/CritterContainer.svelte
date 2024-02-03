@@ -10,6 +10,7 @@
 
     const bellIcon = "icons/bellbag.png";
     const islandExclusive = "icons/tortimer-island-exclusive.png";
+    const islandAvailable = "icons/tortimer-island-available.png"
 
     const rowCounts = {
         "newhorizons": 5,
@@ -33,6 +34,7 @@
     
     let modalOpen = false;
 
+    let modalTortimerIsland;
     let modalName;
     let modalImage;
     let modalLocation;
@@ -69,17 +71,31 @@
     };
 
     function checkTime(obj) {
-        return get(obj.time_available, filters.month, []).includes(filters.time);
+        // New leaf tortimer island workaround, get the first possible availability
+        // when there is nothing for current month
+        if (selectedGame === "newleaf" && filters.includeIsland) {
+            let fallback = obj.time_available[Object.keys(obj.time_available)[0]]
+            return get(obj.time_available, filters.month, fallback).includes(filters.time);
+        } else {
+            return get(obj.time_available, filters.month, []).includes(filters.time);
+        }
     };
 
     function checkDate(obj) {
-        return obj.months_available.includes(filters.month);
+        // New leaf tortimer island workaround, ignore time of year for critters
+        // that also spawn on tortimer island
+        if (selectedGame === "newleaf" && filters.includeIsland) {
+            return obj.months_available.includes(filters.month) || obj.tortimer_island;
+        } else {  // Clean logic
+            return obj.months_available.includes(filters.month);
+        }
     };
 
     function toggleModal(critter) {
         if (!modalOpen) {
             console.log(critter);
 
+            modalTortimerIsland = critter.tortimer_island
             modalName = critter.name;
             modalImage = prepareImage(critter.b64_img);
             modalCatchQuote = critter.catching_quote;
@@ -226,6 +242,9 @@
 <Modal isOpen={modalOpen} toggle={toggleModal}>
     <ModalBody>
         <div class="modal-body">
+            {#if selectedGame === "newleaf" && modalTortimerIsland}
+                <img src={islandAvailable} alt="Tortimer Island all-year round" class="tortimer-island-icon"/>
+            {/if}
             <img src={modalImage} class="modalImage" alt={modalName}/>
             <h2>{modalName}</h2>
             <p><em>{modalCatchQuote}</em></p>
@@ -318,5 +337,14 @@
 
     .nomargin {
         margin: 0;
+    }
+
+    .tortimer-island-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1.5em;
+        height: 1.5em;
+        image-rendering: pixelated;
     }
 </style>

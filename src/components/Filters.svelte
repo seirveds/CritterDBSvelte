@@ -19,6 +19,9 @@
         12: "December",
     };
 
+    const islandExclusive = "icons/tortimer-island-exclusive.png";
+    const islandAvailable = "icons/tortimer-island-available.png"
+
     function filterButtonClick(bool) {
         // Make sure clicking current resets time and month to now
         // Also remove ignoreTime selection if true
@@ -26,6 +29,7 @@
             filters.time = currentTime();
             filters.month = currentMonth();
             filters.ignoreTime = false;
+            filters.includeIsland = true;
         }
         filters.all = bool;
     }
@@ -36,6 +40,11 @@
 
     function ignoreTimeToggle() {
         filters.ignoreTime = !filters.ignoreTime;
+    }
+
+    function includeIslandToggle()  {
+        filters.includeIsland = !filters.includeIsland;
+        console.log(filters);
     }
 
 
@@ -80,17 +89,32 @@
             </button>
         </div>
     {/if}
+    {#if selectedGame === "newleaf"}
+        <div class="center mt-3">
+            <button class={filters.includeIsland ? "filterbutton active" : "filterbutton"} on:click={includeIslandToggle}>
+                <h5>Include Tortimer Island</h5>
+            </button>
+        </div>
+        <div class="center pt-3">
+            <img src={islandExclusive} alt="Tortimer Island exclusive" style="width: 1em; height: 1em; margin-right: .5em"><p class="mb-0">Tortimer Island exclusive</p>
+        </div>
+        <div class="center">
+            <img src={islandAvailable} alt="Year-round on Tortimer Island" style="width: 1em; height: 1em; margin-right: .5em"><p class="mb-0">Year-round on Tortimer Island</p>
+        </div>
+    {/if}
 </div>
 
 <style>
     .center {
         display: flex;
+        align-items: center;
         justify-content: center;
         text-align: center;
     }
 
     .filterbutton {
-        border: none;
+        border: 2px solid black;
+        border-radius: 500px;
         background-color: rgba(0, 0, 0, 0);
         width: fit-content !important;
         height: fit-content !important;

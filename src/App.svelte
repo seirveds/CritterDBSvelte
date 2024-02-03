@@ -12,6 +12,7 @@
         "time": currentTime(),
         "all": false,
 		"ignoreTime": false,
+		"includeIsland": true,
     };
 </script>
 
