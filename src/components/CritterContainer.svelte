@@ -63,6 +63,8 @@
         rows = rowCounts[selectedGame];
         columns = Math.ceil(filteredCritters.length / rowCounts[selectedGame]);
 
+        console.log(filteredCritters);
+
     };
 
     function checkTime(obj) {
@@ -143,17 +145,21 @@
     };
 
     function formatMonthsAvailable(months_available) {
-        // Easy case
-        if (months_available.length === 12) {
-            return 'All year';
-        }
-
         // Create an array to hold month names, index 0 is empty because my
         // arrays start at 1 for january
         const monthNames = [
             '', 'January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'
         ];
+
+        // Easy cases
+        if (months_available.length === 12) {
+            return 'All year';
+        }
+
+        if (months_available.length === 1) {
+            return monthNames[months_available[0]]
+        }
 
         // Sort the adjusted array in ascending order
         months_available.sort((a, b) => a - b);
@@ -210,6 +216,9 @@
                     style={critter.active ? "" : "opacity: 0.1;"}
                 />
             </div>
+            <!-- {#if critter.tortimer_island}
+                <p>T</p>
+            {/if} -->
         {/each}
     </div>
 </div>
