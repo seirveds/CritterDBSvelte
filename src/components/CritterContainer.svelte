@@ -222,21 +222,23 @@
 </script>
 
 <div class="grid-container">
-    <div class="grid" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
-        {#each filteredCritters as critter}
-            <div class="tile">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <img
-                    src={prepareImage(critter.b64_img)}
-                    alt={critter.name} class="critterImage"
-                    on:click={toggleModal(critter)}
-                    style={critter.active ? "" : "opacity: 0.1;"}
-                />
-                {#if selectedGame === "newleaf" && critter.tortimer_island_exclusive}
-                    <img src={islandExclusive} alt="Tortimer island exclusive" style="position: absolute; top: 5px; right: 5px"/>
-                {/if}
-            </div>
-        {/each}
+    <div class="scrollable-grid">
+        <div class="grid" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
+            {#each filteredCritters as critter}
+                <div class="tile">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <img
+                        src={prepareImage(critter.b64_img)}
+                        alt={critter.name} class="critterImage"
+                        on:click={toggleModal(critter)}
+                        style={critter.active ? "" : "opacity: 0.1;"}
+                    />
+                    {#if selectedGame === "newleaf" && critter.tortimer_island_exclusive}
+                        <img src={islandExclusive} alt="Tortimer island exclusive" style="position: absolute; top: 5px; right: 5px"/>
+                    {/if}
+                </div>
+            {/each}
+        </div>
     </div>
 </div>
 <Modal isOpen={modalOpen} toggle={toggleModal}>
@@ -271,22 +273,18 @@
 </Modal>
 
 <style>
-    .modal-body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        overflow-wrap: break-word;
-    }
-
     .grid-container {
         display: flex;
         justify-content: center;
         padding-top: 2em;
         padding-bottom: 2em;
-        /* overflow-x: scroll;
-        overflow-y: hidden;
-        width: 100vw; */
+
+    }
+
+    .scrollable-grid {
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 70vw;
     }
 
     .grid {
@@ -322,6 +320,14 @@
     .critterImage:hover {
         transform: scale(1.2);
         cursor: pointer;
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        overflow-wrap: break-word;
     }
 
     .modalImage {
