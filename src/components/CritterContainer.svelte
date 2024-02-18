@@ -85,7 +85,7 @@
         // New leaf tortimer island workaround, ignore time of year for critters
         // that also spawn on tortimer island
         if (selectedGame === "newleaf" && filters.includeIsland) {
-            return obj.months_available.includes(filters.month) || obj.tortimer_island;
+            return obj.months_available.includes(filters.month) || (obj.tortimer_island || obj.tortimer_island_exclusive);
         } else {  // Clean logic
             return obj.months_available.includes(filters.month);
         }
@@ -233,9 +233,13 @@
                         on:click={toggleModal(critter)}
                         style={critter.active ? "" : "opacity: 0.1;"}
                     />
+                    {#if selectedGame === "newleaf" && critter.tortimer_island}
+                        <img src={islandAvailable} alt="Tortimer island " style="position: absolute; top: 5px; right: 5px"/>
+                    {/if}
                     {#if selectedGame === "newleaf" && critter.tortimer_island_exclusive}
                         <img src={islandExclusive} alt="Tortimer island exclusive" style="position: absolute; top: 5px; right: 5px"/>
                     {/if}
+                    
                 </div>
             {/each}
         </div>
