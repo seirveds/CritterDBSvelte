@@ -5,14 +5,14 @@
 
 	import { currentMonth, currentTime} from "./utils"
 
-	export let selectedGame = "newhorizons";
+	export let selectedGame = "newleaf";
 	export let filters = {
         "crittertype": "fish",
         "month": currentMonth(),
         "time": currentTime(),
         "all": false,
 		"ignoreTime": false,
-		"includeIsland": true,
+		"includeIsland": false,
     };
 </script>
 

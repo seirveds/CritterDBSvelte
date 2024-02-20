@@ -1,5 +1,6 @@
 <script>
     import { currentMonth, currentTime} from "../utils"
+    import Icons from "./Icons.svelte";
 
     export let filters;
     export let selectedGame;
@@ -44,18 +45,23 @@
 
     function includeIslandToggle()  {
         filters.includeIsland = !filters.includeIsland;
-        console.log(filters);
     }
 
 
 </script>
 
 <div>
-    <div style="display: flex">
-        <button class={ filters.crittertype == "fish" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("fish")}}> Fish </button>
-        <button class={ filters.crittertype == "bug" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("bug")}}> Bugs </button>
+    <div style="display: flex; padding-left: 5em">
+        <button class={ filters.crittertype == "fish" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("fish")}}>
+            <Icons name="fish" class="filter-icon"/>
+        </button>
+        <button class={ filters.crittertype == "bug" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("bug")}}>
+            <Icons name="bug" class="filter-icon"/>
+        </button>
         {#if ["newhorizons", "newleaf"].includes(selectedGame)}
-            <button class={ filters.crittertype == "sea_creature" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("sea_creature")}}> Sea </button>
+            <button class={ filters.crittertype == "sea_creature" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("sea_creature")}}>
+                <Icons name="seacreature" class="filter-icon"/>
+            </button>
         {/if}
     </div>
     <hr class="m-0">

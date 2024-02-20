@@ -84,8 +84,8 @@
     function checkDate(obj) {
         // New leaf tortimer island workaround, ignore time of year for critters
         // that also spawn on tortimer island
-        if (selectedGame === "newleaf" && filters.includeIsland) {
-            return obj.months_available.includes(filters.month) || (obj.tortimer_island || obj.tortimer_island_exclusive);
+        if (selectedGame === "newleaf") {
+            return filters.includeIsland ? obj.months_available.includes(filters.month) || obj.tortimer_island : obj.months_available.includes(filters.month) && !obj.tortimer_island_exclusive
         } else {  // Clean logic
             return obj.months_available.includes(filters.month);
         }
@@ -226,20 +226,20 @@
         <div class="grid" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
             {#each filteredCritters as critter}
                 <div class="tile">
-                    <!-- svelte-ignore a11y-click-events-have-key-events -->
-                    <img
-                        src={prepareImage(critter.b64_img)}
-                        alt={critter.name} class="critterImage"
-                        on:click={toggleModal(critter)}
-                        style={critter.active ? "" : "opacity: 0.1;"}
-                    />
-                    {#if selectedGame === "newleaf" && critter.tortimer_island}
-                        <img src={islandAvailable} alt="Tortimer island " style="position: absolute; top: 5px; right: 5px"/>
-                    {/if}
-                    {#if selectedGame === "newleaf" && critter.tortimer_island_exclusive}
-                        <img src={islandExclusive} alt="Tortimer island exclusive" style="position: absolute; top: 5px; right: 5px"/>
-                    {/if}
-                    
+                    <div style={critter.active ? "" : "opacity: 0.1;"}>
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <img
+                            src={prepareImage(critter.b64_img)}
+                            alt={critter.name} class="critter-image"
+                            on:click={toggleModal(critter)}
+                        />
+                        {#if selectedGame === "newleaf" && critter.tortimer_island}
+                            <img src={islandAvailable} alt="Tortimer island " class="grid-tortimer-island-icon"/>
+                        {/if}
+                        {#if selectedGame === "newleaf" && critter.tortimer_island_exclusive}
+                            <img src={islandExclusive} alt="Tortimer island exclusive" class="grid-tortimer-island-icon"/>
+                        {/if}
+                    </div>
                 </div>
             {/each}
         </div>
@@ -251,7 +251,7 @@
             {#if selectedGame === "newleaf" && modalTortimerIsland}
                 <img src={islandAvailable} alt="Tortimer Island all-year round" class="tortimer-island-icon"/>
             {/if}
-            <img src={modalImage} class="modalImage" alt={modalName}/>
+            <img src={modalImage} class="modal-image" alt={modalName}/>
             <h2>{modalName}</h2>
             <p><em>{modalCatchQuote}</em></p>
             <div>
@@ -314,16 +314,22 @@
         justify-content: center;
     }
 
-    .critterImage {
+    .critter-image {
         width: 64px;
         height: 64px;
         image-rendering: pixelated;
         transition: transform .1s; /* Animation */
     }
 
-    .critterImage:hover {
+    .critter-image:hover {
         transform: scale(1.2);
         cursor: pointer;
+    }
+
+    .grid-tortimer-island-icon {
+        position: absolute;
+        top: 5px !important;
+        right: 5px !important;
     }
 
     .modal-body {
@@ -334,7 +340,7 @@
         overflow-wrap: break-word;
     }
 
-    .modalImage {
+    .modal-image {
         width: 96px;
         height: 96px;
         image-rendering: pixelated;
