@@ -3,11 +3,12 @@
         Modal,
         ModalBody,
     } from "sveltestrap";
-    import { get } from 'svelte/store';
 
 
     import {
-        caught
+        addToStore,
+        removeFromStore,
+        logStore,
     } from "../store";
     import critters from "../assets/critters2.json";
 
@@ -223,35 +224,9 @@
         return key in obj ? obj[key] : default_
     };
 
-    // Store methods
-    function addToStore(obj) {
-        let store = get(caught);
-        if (!(selectedGame in store)) {
-            store[selectedGame] = [];
-        };
-
-        if (!(store[selectedGame].includes(obj.name))) {
-            store[selectedGame].push(obj.name); 
-        };
-        caught.set(store);
-    };
-
-    function removeFromStore(obj) {
-        let store = get(caught);
-        if (store[selectedGame].includes(obj.name)) {
-            store = store[selectedGame].filter(e => e !== obj.name);
-            caught.set(store);
-        };
-    };
-    
-    // Debug
-    function logStore() {
-        console.log(get(caught));
-    };
-
     function gridIconClick(critter) {
         // toggleModal(critter);
-        addToStore(critter);
+        addToStore(critter, selectedGame);
         logStore();
     };
 </script>
