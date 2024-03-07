@@ -3,6 +3,12 @@
         Modal,
         ModalBody,
     } from "sveltestrap";
+    import { get } from 'svelte/store';
+
+
+    import {
+        caught
+    } from "../store";
     import critters from "../assets/critters2.json";
 
     export let selectedGame;
@@ -75,9 +81,9 @@
         // when there is nothing for current month
         if (selectedGame === "newleaf" && filters.includeIsland) {
             let fallback = obj.time_available[Object.keys(obj.time_available)[0]]
-            return get(obj.time_available, filters.month, fallback).includes(filters.time);
+            return obj_get(obj.time_available, filters.month, fallback).includes(filters.time);
         } else {
-            return get(obj.time_available, filters.month, []).includes(filters.time);
+            return obj_get(obj.time_available, filters.month, []).includes(filters.time);
         }
     };
 
@@ -213,12 +219,41 @@
         return monthRangeStrings.join('; ');
     };
 
-    function get(obj, key, default_) {
-        if (key in obj) {
-            return obj[key]
-        }
-        return default_
-    }
+    function obj_get(obj, key, default_) {
+        return key in obj ? obj[key] : default_
+    };
+
+    // Store methods
+    function addToStore(obj) {
+        let store = get(caught);
+        if (!(selectedGame in store)) {
+            store[selectedGame] = [];
+        };
+
+        if (!(store[selectedGame].includes(obj.name))) {
+            store[selectedGame].push(obj.name); 
+        };
+        caught.set(store);
+    };
+
+    function removeFromStore(obj) {
+        let store = get(caught);
+        if (store[selectedGame].includes(obj.name)) {
+            store = store[selectedGame].filter(e => e !== obj.name);
+            caught.set(store);
+        };
+    };
+    
+    // Debug
+    function logStore() {
+        console.log(get(caught));
+    };
+
+    function gridIconClick(critter) {
+        // toggleModal(critter);
+        addToStore(critter);
+        logStore();
+    };
 </script>
 
 <div class="grid-container">
@@ -231,7 +266,7 @@
                         <img
                             src={prepareImage(critter.b64_img)}
                             alt={critter.name} class="critter-image"
-                            on:click={toggleModal(critter)}
+                            on:click={gridIconClick(critter)}
                         />
                         {#if selectedGame === "newleaf" && critter.tortimer_island}
                             <img src={islandAvailable} alt="Tortimer island " class="grid-tortimer-island-icon"/>
