@@ -243,6 +243,9 @@
     };
 
     function showCritterInGrid(active, critterName) {
+        if (filters.markAsCaught) {
+            return true;
+        }
         if (filters.hideCaught) {
             return active && !critterInStore(critterName, selectedGame);
         }
