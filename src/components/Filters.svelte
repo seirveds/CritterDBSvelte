@@ -31,6 +31,7 @@
             filters.month = currentMonth();
             filters.ignoreTime = false;
             filters.includeIsland = true;
+            filters.hideCaught = false;
         }
         filters.all = bool;
     }
@@ -43,14 +44,25 @@
         filters.ignoreTime = !filters.ignoreTime;
     }
 
-    function includeIslandToggle()  {
+    function includeIslandToggle() {
         filters.includeIsland = !filters.includeIsland;
     }
 
+    function hideCaughtToggle() {
+        filters.hideCaught = !filters.hideCaught;
+    }
 
+    function markAsCaughtToggle() {
+        filters.markAsCaught = !filters.markAsCaught;
+    }
 </script>
 
 <div>
+    <div style="display: flex; float: right">
+        <button class={ filters.markAsCaught ? "filterbutton active" : "filterbutton" } on:click={() => markAsCaughtToggle()}>
+            <h6 class="mb-0">Mark as caught</h6>
+        </button>
+    </div>
     <div style="display: flex; padding-left: 5em">
         <button class={ filters.crittertype == "fish" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("fish")}}>
             <Icons name="fish" class="filter-icon"/>
@@ -92,6 +104,12 @@
         <div class="center">
             <button class={filters.ignoreTime ? "filterbutton active" : "filterbutton"} on:click={ignoreTimeToggle}>
                 <h5>Ignore time</h5>
+            </button>
+        </div>
+
+        <div class="center mt-3">
+            <button class={filters.hideCaught ? "filterbutton active" : "filterbutton"} on:click={hideCaughtToggle}>
+                <h5>Hide caught</h5>
             </button>
         </div>
     {/if}
@@ -146,6 +164,10 @@
     }
 
     .filterbutton.active>h5 {
+        color: white;
+    }
+
+    .filterbutton.active>h6 {
         color: white;
     }
 

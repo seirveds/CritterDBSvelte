@@ -13,6 +13,8 @@
         "all": false,
 		"ignoreTime": false,
 		"includeIsland": false,
+		"markAsCaught": false,
+		"hideCaught": false,
     };
 </script>
 

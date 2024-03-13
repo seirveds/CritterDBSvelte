@@ -5,42 +5,46 @@ function initializeStore() {
     localStorage.setItem(STORENAME, JSON.stringify(DEFAULTSTORE));
 };
 
-function loadStore() {
-    let store = localStorage.getItem(STORENAME);
-    console.log(1, store);
-    if (!store) {
-        initializeStore();
-        store = JSON.stringify(DEFAULTSTORE)
-    }
-    console.log(store, typeof JSON.parse(store))
-    return JSON.parse(store);
-};
-
 function saveStore(obj) {
     localStorage.setItem(STORENAME, JSON.stringify(obj));
 };
 
-export function addToStore(obj, selectedGame) {
+function loadStore() {
+    let store = localStorage.getItem(STORENAME);
+    if (!store) {
+        initializeStore();
+        store = JSON.stringify(DEFAULTSTORE);
+    }
+    return JSON.parse(store);
+};
+
+export function addToStore(critterName, selectedGame) {
     let store = loadStore();
-    console.log(store, obj, selectedGame);
-    console.log(typeof store);
     if (!(selectedGame in store)) {
         store[selectedGame] = [];
     };
 
-    if (!(store[selectedGame].includes(obj.name))) {
-        store[selectedGame].push(obj.name);
+    if (!(store[selectedGame].includes(critterName))) {
+        store[selectedGame].push(critterName);
     };
     saveStore(store);
 };
 
-export function removeFromStore(obj, selectedGame) {
-    let store = get(caught);
-    if (store[selectedGame].includes(obj.name)) {
-        store = store[selectedGame].filter(e => e !== obj.name);
+export function removeFromStore(critterName, selectedGame) {
+    let store = loadStore();
+    if (store[selectedGame].includes(critterName)) {
+        store[selectedGame] = store[selectedGame].filter(e => e !== critterName);
         saveStore(store);
     };
 };
+
+export function critterInStore(critterName, selectedGame) {
+    let store = loadStore();
+    if (selectedGame in store) {
+        return store[selectedGame].includes(critterName);
+    }
+    return false;
+}
 
 // Debug
 export function logStore() {

@@ -4,11 +4,11 @@
         ModalBody,
     } from "sveltestrap";
 
-
     import {
         addToStore,
         removeFromStore,
         logStore,
+        critterInStore,
     } from "../store";
     import critters from "../assets/critters2.json";
 
@@ -50,6 +50,9 @@
     let modalTime;
     let modalMonths;
     let modalSize;
+
+    // Used to refresh grid when critter is marked as caught
+    let registerClick = true;
 
     $: filterChange(selectedGame, filters);
     function filterChange() {
@@ -225,34 +228,53 @@
     };
 
     function gridIconClick(critter) {
-        // toggleModal(critter);
-        addToStore(critter, selectedGame);
-        logStore();
+        if (filters.markAsCaught) {
+            if (critterInStore(critter.name, selectedGame)) {
+                removeFromStore(critter.name, selectedGame);
+            } else {
+                addToStore(critter.name, selectedGame);
+            }
+            logStore();
+            // Flip boolean to trigger {key} around grid, making it refresh
+            registerClick = !registerClick;
+        } else {
+            toggleModal(critter);
+        }
     };
+
+    function showCritterInGrid(active, critterName) {
+        if (filters.hideCaught) {
+            return active && !critterInStore(critterName, selectedGame);
+        }
+        return active;
+    }
 </script>
 
 <div class="grid-container">
     <div class="scrollable-grid">
-        <div class="grid" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
-            {#each filteredCritters as critter}
-                <div class="tile">
-                    <div style={critter.active ? "" : "opacity: 0.1;"}>
-                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <img
-                            src={prepareImage(critter.b64_img)}
-                            alt={critter.name} class="critter-image"
-                            on:click={gridIconClick(critter)}
-                        />
-                        {#if selectedGame === "newleaf" && critter.tortimer_island}
-                            <img src={islandAvailable} alt="Tortimer island " class="grid-tortimer-island-icon"/>
-                        {/if}
-                        {#if selectedGame === "newleaf" && critter.tortimer_island_exclusive}
-                            <img src={islandExclusive} alt="Tortimer island exclusive" class="grid-tortimer-island-icon"/>
-                        {/if}
+        {#key registerClick}
+            <div class="grid" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
+                {#each filteredCritters as critter}
+                    <div class={critterInStore(critter.name, selectedGame) && !filters.hideCaught ? "tile caught" : "tile"}>
+                        <div style={showCritterInGrid(critter.active, critter.name) ? "" : "opacity: 0.1;"}>
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <img
+                                src={prepareImage(critter.b64_img)}
+                                alt={critter.name}
+                                class="critter-image"
+                                on:click={gridIconClick(critter)}
+                            />
+                            {#if selectedGame === "newleaf" && critter.tortimer_island}
+                                <img src={islandAvailable} alt="Tortimer island " class="grid-tortimer-island-icon"/>
+                            {/if}
+                            {#if selectedGame === "newleaf" && critter.tortimer_island_exclusive}
+                                <img src={islandExclusive} alt="Tortimer island exclusive" class="grid-tortimer-island-icon"/>
+                            {/if}
+                        </div>
                     </div>
-                </div>
-            {/each}
-        </div>
+                {/each}
+            </div>
+        {/key}
     </div>
 </div>
 <Modal isOpen={modalOpen} toggle={toggleModal}>
@@ -322,6 +344,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .tile.caught {
+        background-color: rgb(211, 255, 211);
     }
 
     .critter-image {
