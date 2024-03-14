@@ -1,6 +1,7 @@
 <script>
     import { currentMonth, currentTime} from "../utils"
     import Icons from "./Icons.svelte";
+    import toast, { Toaster } from 'svelte-french-toast';
 
     export let filters;
     export let selectedGame;
@@ -53,7 +54,11 @@
     }
 
     function markAsCaughtToggle() {
+        if (!filters.markAsCaught) {
+            toast("Click on critters to (un)set them as caught", {icon: "💭"})
+        }
         filters.markAsCaught = !filters.markAsCaught;
+        
     }
 </script>
 
@@ -126,6 +131,7 @@
             <img src={islandAvailable} alt="Year-round on Tortimer Island" style="width: 1em; height: 1em; margin-right: .5em"><p class="mb-0">Year-round on Tortimer Island</p>
         </div>
     {/if}
+    <Toaster/>
 </div>
 
 <style>
