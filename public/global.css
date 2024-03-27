@@ -1,3 +1,10 @@
+:root {
+	--bg: #ECD4B1;
+	--bg-dark: #B49D7C;
+	--bg-light: #FFEDCB;
+	--text: #333;
+  }
+
 html, body {
 	position: relative;
 	width: 100%;
@@ -5,7 +12,8 @@ html, body {
 }
 
 body {
-	color: #333;
+	color: var(--text) !important;
+	background-color: var(--bg) !important;
 	margin: 0;
 	padding: 8px;
 	box-sizing: border-box;
@@ -60,4 +68,21 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+/* Workaround for being unable to style modal in CritterContainer because
+of the way svelte components work */
+.modal-content {
+	background-color: var(--bg-light) !important;
+	border-color: var(--bg-light) !important;
+}
+
+.modal-dialog {
+	padding-top: 20vh !important;
+	padding-bottom: auto !important;
+}
+
+/* Idem as above for navbar */
+.navbar {
+	background-color: var(--bg-dark) !important;
 }

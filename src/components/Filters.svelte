@@ -229,18 +229,18 @@
         padding: .5em 2em .5em 2em;
         border: none;
         border-radius: 10px 10px 0 0;
-        background-color: #ffffff;
+        background-color: #d8c2a0;
         width: 6em;
         text-align: center;
     }
 
     .navbutton.active {
-        border: 1px solid DarkGray;
+        filter: brightness(85%);
         border-bottom: none;
     }
 
     .navbutton:hover {
-        background-color: lightgray;
+        filter: brightness(60%)
     }
 
 </style>

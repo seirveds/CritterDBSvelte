@@ -371,6 +371,7 @@
         right: 5px !important;
     }
 
+    /* Some modal styling done in globals.css */
     .modal-body {
         display: flex;
         flex-direction: column;

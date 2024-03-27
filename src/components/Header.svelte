@@ -27,7 +27,7 @@
     };
 </script>
 
-<Navbar color="dark" dark expand="md">
+<Navbar expand="md">
     <Nav navbar>
         <NavItem>
             <NavLink href="/">CritterDB</NavLink>
