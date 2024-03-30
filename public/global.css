@@ -1,8 +1,30 @@
+/* Fonts */
+@font-face {
+	font-family: critterDBFontBold;
+	src: url("fonts/FOT-Rodin Pro DB.otf") format("opentype");
+}
+
+@font-face {
+font-family: critterDBFont;
+src: url("fonts/FOT-Rodin Pro M.otf") format("opentype");
+}
+
+h1, h2, h3, h4, h5, h6 {
+font-family: critterDBFontBold !important;
+}
+
+p, a, label, select, span {
+font-family: critterDBFont !important;
+}
+
 :root {
-	--bg: #ECD4B1;
-	--bg-dark: #B49D7C;
-	--bg-light: #FFEDCB;
-	--text: #333;
+	--bg: #fff5e6;
+	--header: #588470;
+	--header-light: #f2f6f3;
+	--filter-tabs: #BDC49C;
+	--button-dark: #354238;
+	--text: #354238;
+	--text-light: #f2f6f3;
   }
 
 html, body {
@@ -53,7 +75,7 @@ input:disabled {
 }
 
 button {
-	color: #333;
+	color: var(--button-dark);
 	background-color: #f4f4f4;
 	outline: none;
 }
@@ -84,5 +106,10 @@ of the way svelte components work */
 
 /* Idem as above for navbar */
 .navbar {
-	background-color: var(--bg-dark) !important;
+	background-color: var(--header) !important;
+}
+
+/* Default bootstrap classname */
+.dropdown-menu {
+	background-color: var(--header-light) !important;
 }

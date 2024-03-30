@@ -30,10 +30,10 @@
 <Navbar expand="md">
     <Nav navbar>
         <NavItem>
-            <NavLink href="/">CritterDB</NavLink>
+            <NavLink href="/"><h3 class="name">CritterDB</h3></NavLink>
         </NavItem>
         <Dropdown nav setActiveFromChild>
-        <DropdownToggle nav class="nav-link" caret> {dropdownText} </DropdownToggle>
+        <DropdownToggle nav class="nav-link" style="padding: 0; transform: translateY(50%); color: var(--text-light)" caret> {dropdownText} </DropdownToggle>
         <DropdownMenu>
             {#each dropdownOptions as option}
                 <DropdownItem on:click={() => selectOption(option)}>
@@ -44,3 +44,10 @@
         </Dropdown>
     </Nav>
 </Navbar>
+
+<style>
+    .name {
+        margin: 0 1em 0 0;
+        color: var(--text-light);
+    }
+</style>

@@ -5,7 +5,7 @@
 
 	import { currentMonth, currentTime} from "./utils"
 
-	export let selectedGame = "newleaf";
+	export let selectedGame = "newhorizons";
 	export let filters = {
         "crittertype": "fish",
         "month": currentMonth(),

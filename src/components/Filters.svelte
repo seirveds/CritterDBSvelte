@@ -65,7 +65,14 @@
 <div>
     <div style="display: flex; float: right">
         <button class={ filters.markAsCaught ? "filterbutton active" : "filterbutton" } on:click={() => markAsCaughtToggle()}>
-            <h6 class="mb-0">Mark as caught</h6>
+
+            <h6 class="mb-0">
+                {#if filters.markAsCaught}
+                    Done
+                {:else}
+                    Mark as caught
+                {/if}
+            </h6>
         </button>
     </div>
     <div style="display: flex; padding-left: 5em">
@@ -143,7 +150,7 @@
     }
 
     .filterbutton {
-        border: 2px solid black;
+        border: 2px solid var(--button-dark);
         border-radius: 500px;
         background-color: rgba(0, 0, 0, 0);
         width: fit-content !important;
@@ -154,27 +161,24 @@
 
     .filterbutton:hover {
         transform: scale(1.1);
-        background-color: rgb(0, 0, 0);
         border-radius: 500px; /* Large for pill look */
-        color: white;
     }
 
-    .filterbutton>h5 {
+    .filterbutton>h5,
+    .filterbutton>h6 {
         margin: 0;
         padding: 0 10px 0 10px;
+        color: var(--text);
     }
 
     .filterbutton.active {
-        background-color: rgb(0, 0, 0);
+        background-color: var(--button-dark);
         border-radius: 500px; /* Large for pill look */
     }
 
-    .filterbutton.active>h5 {
-        color: white;
-    }
-
+    .filterbutton.active>h5,
     .filterbutton.active>h6 {
-        color: white;
+        color: var(--text-light);
     }
 
     .range-container {
@@ -229,7 +233,7 @@
         padding: .5em 2em .5em 2em;
         border: none;
         border-radius: 10px 10px 0 0;
-        background-color: #d8c2a0;
+        background-color: var(--filter-tabs);
         width: 6em;
         text-align: center;
     }
