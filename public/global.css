@@ -95,8 +95,8 @@ button:focus {
 /* Workaround for being unable to style modal in CritterContainer because
 of the way svelte components work */
 .modal-content {
-	background-color: var(--bg-light) !important;
-	border-color: var(--bg-light) !important;
+	background-color: var(--bg) !important;
+	border-color: var(--bg) !important;
 }
 
 .modal-dialog {
