@@ -65,8 +65,8 @@
 <div>
     <div style="display: flex; float: right">
         <button class={ filters.markAsCaught ? "filterbutton active" : "filterbutton" } on:click={() => markAsCaughtToggle()}>
-
             <h6 class="mb-0">
+                <Icons name="caught" class="button-icon-small" viewbox=128/>
                 {#if filters.markAsCaught}
                     Done
                 {:else}
@@ -156,7 +156,7 @@
         width: fit-content !important;
         height: fit-content !important;
         margin: 0 1em 0 1em;
-        padding: 4px 10px 4px 10px;
+        padding: 4px 6px 4px 6px;
     }
 
     .filterbutton:hover {
