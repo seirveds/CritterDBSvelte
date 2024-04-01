@@ -13,6 +13,7 @@
 </script>
 <svg
     class={$$props.class}
+    style={$$props.style}
     {width}
     {height}
     viewBox="0 0 {$$props.viewbox} {$$props.viewbox}">
@@ -24,7 +25,7 @@
     }
 
     .button-icon-small {
-        width: 1.5em !important;
-        height: 1.5em !important;
+        width: 1.2em !important;
+        height: 1.2em !important;
     }
 </style>

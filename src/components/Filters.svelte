@@ -3,6 +3,9 @@
     import Icons from "./Icons.svelte";
     import toast, { Toaster } from 'svelte-french-toast';
 
+    import ClockFill from "svelte-bootstrap-icons/lib/ClockFill.svelte";
+    import EyeSlashFill from "svelte-bootstrap-icons/lib/EyeSlashFill.svelte";
+
     export let filters;
     export let selectedGame;
 
@@ -65,13 +68,9 @@
 <div>
     <div style="display: flex; float: right">
         <button class={ filters.markAsCaught ? "filterbutton active" : "filterbutton" } on:click={() => markAsCaughtToggle()}>
-            <h6 class="mb-0">
-                <Icons name="caught" class="button-icon-small" viewbox=128/>
-                {#if filters.markAsCaught}
-                    Done
-                {:else}
-                    Mark as caught
-                {/if}
+            <h6 class="mb-0 center">
+                <Icons name="caught" class="button-icon-small" style="margin-right: .3em" viewbox=128/>
+                Mark as caught
             </h6>
         </button>
     </div>
@@ -115,13 +114,13 @@
 
         <div class="center">
             <button class={filters.ignoreTime ? "filterbutton active" : "filterbutton"} on:click={ignoreTimeToggle}>
-                <h5>Ignore time</h5>
+                <h5 class="center"><ClockFill style="margin-right: .5em"/> Ignore time</h5>
             </button>
         </div>
 
         <div class="center mt-3">
             <button class={filters.hideCaught ? "filterbutton active" : "filterbutton"} on:click={hideCaughtToggle}>
-                <h5>Hide caught</h5>
+                <h5 class="center"><EyeSlashFill width=20 height=20 style="margin-right: .5em"/>Hide caught</h5>
             </button>
         </div>
     {/if}
@@ -167,8 +166,13 @@
     .filterbutton>h5,
     .filterbutton>h6 {
         margin: 0;
-        padding: 0 10px 0 10px;
+        padding: 0 10px 0 10px;  /* Override for h6 below */
         color: var(--text);
+    }
+
+    /* Padding override */
+    .filterbutton>h6 {
+        padding: 0 4px 0 4px !important;
     }
 
     .filterbutton.active {
@@ -179,6 +183,10 @@
     .filterbutton.active>h5,
     .filterbutton.active>h6 {
         color: var(--text-light);
+    }
+
+    .button-svg {
+        margin-right: .5em;
     }
 
     .range-container {
