@@ -3,6 +3,8 @@
     import Icons from "./Icons.svelte";
     import toast, { Toaster } from 'svelte-french-toast';
 
+    import CalendarFill from "svelte-bootstrap-icons/lib/CalendarFill.svelte";
+    import CalendarEventFill from "svelte-bootstrap-icons/lib/CalendarEventFill.svelte";
     import ClockFill from "svelte-bootstrap-icons/lib/ClockFill.svelte";
     import EyeSlashFill from "svelte-bootstrap-icons/lib/EyeSlashFill.svelte";
 
@@ -93,10 +95,10 @@
 <div class="pt-3">
     <div class="center">
         <button class={filters.all ? "filterbutton active" : "filterbutton"} on:click={() => {filterButtonClick(true)}}>
-            <h5 class="button-text">All</h5>
+            <h5 class="button-text center"><CalendarFill style="margin-right: .5em"/>All</h5>
         </button>
         <button class={!filters.all && currentTime() === filters.time && currentMonth() === filters.month && !filters.ignoreTime ? "filterbutton active" : "filterbutton"} on:click={() => {filterButtonClick(false)}}>
-            <h5 class="button-text">Current</h5>
+            <h5 class="button-text center"><CalendarEventFill style="margin-right: .5em"/>Current</h5>
         </button>
     </div>
 

@@ -28,4 +28,13 @@
         width: 1.2em !important;
         height: 1.2em !important;
     }
+
+    /* Used in CritterContainer.svelte */
+    .grid-caught-icon {
+        position: absolute;
+        bottom: 5px !important;
+        right: 5px !important;
+        width: 18px;
+        height: 18px;
+    }
 </style>

@@ -4,6 +4,8 @@
         ModalBody,
     } from "sveltestrap";
 
+    import Icons from "./Icons.svelte";
+
     import {
         addToStore,
         removeFromStore,
@@ -274,6 +276,9 @@
                                 <img src={islandExclusive} alt="Tortimer island exclusive" class="grid-tortimer-island-icon"/>
                             {/if}
                         </div>
+                        {#if critterInStore(critter.name, selectedGame)}
+                            <Icons name="caught" class="grid-caught-icon" viewbox=128/>
+                        {/if}
                     </div>
                 {/each}
             </div>
@@ -347,22 +352,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: transform .1s; /* Animation for hover*/
     }
 
-    .tile.caught {
-        background-color: rgb(211, 255, 211);
+    .tile:hover {
+        cursor: pointer;
+    }
+
+    .tile:hover .critter-image {
+        transform: scale(1.2);
     }
 
     .critter-image {
         width: 64px;
         height: 64px;
         image-rendering: pixelated;
-        transition: transform .1s; /* Animation */
-    }
-
-    .critter-image:hover {
-        transform: scale(1.2);
-        cursor: pointer;
     }
 
     .grid-tortimer-island-icon {
