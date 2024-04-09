@@ -36,8 +36,11 @@
             filters.time = currentTime();
             filters.month = currentMonth();
             filters.ignoreTime = false;
-            filters.includeIsland = true;
+        // When selecting all, reset caught and tortimer island
+        // filter
+        } else if (!filters.all && bool) {
             filters.hideCaught = false;
+            filters.includeIsland = true;
         }
         filters.all = bool;
     }
@@ -125,31 +128,24 @@
                 <h5 class="center"><EyeSlashFill width=20 height=20 style="margin-right: .5em"/>Hide caught</h5>
             </button>
         </div>
-    {/if}
-    {#if selectedGame === "newleaf"}
-        <div class="center mt-3">
-            <button class={filters.includeIsland ? "filterbutton active" : "filterbutton"} on:click={includeIslandToggle}>
-                <h5>Include Tortimer Island</h5>
-            </button>
-        </div>
-        <div class="center pt-3">
-            <img src={islandExclusive} alt="Tortimer Island exclusive" style="width: 1em; height: 1em; margin-right: .5em"><p class="mb-0">Tortimer Island exclusive</p>
-        </div>
-        <div class="center">
-            <img src={islandAvailable} alt="Year-round on Tortimer Island" style="width: 1em; height: 1em; margin-right: .5em"><p class="mb-0">Year-round on Tortimer Island</p>
-        </div>
+        {#if selectedGame === "newleaf"}
+            <div class="center mt-3">
+                <button class={filters.includeIsland ? "filterbutton active" : "filterbutton"} on:click={includeIslandToggle}>
+                    <h5>Include Tortimer Island</h5>
+                </button>
+            </div>
+            <div class="center pt-3">
+                <img src={islandExclusive} alt="Tortimer Island exclusive" style="width: 1em; height: 1em; margin-right: .5em"><p class="mb-0">Tortimer Island exclusive</p>
+            </div>
+            <div class="center">
+                <img src={islandAvailable} alt="Year-round on Tortimer Island" style="width: 1em; height: 1em; margin-right: .5em"><p class="mb-0">Year-round on Tortimer Island</p>
+            </div>
+        {/if}
     {/if}
     <Toaster/>
 </div>
 
 <style>
-    .center {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
     .filterbutton {
         border: 2px solid var(--button-dark);
         border-radius: 500px;
@@ -185,10 +181,6 @@
     .filterbutton.active>h5,
     .filterbutton.active>h6 {
         color: var(--text-light);
-    }
-
-    .button-svg {
-        margin-right: .5em;
     }
 
     .range-container {

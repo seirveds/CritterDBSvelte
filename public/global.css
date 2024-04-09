@@ -19,6 +19,7 @@ font-family: critterDBFont !important;
 
 :root {
 	--bg: #fff5e6;
+	--bg-dark: #e7d5b9;
 	--header: #588470;
 	--header-light: #f2f6f3;
 	--filter-tabs: #BDC49C;
@@ -90,6 +91,14 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+/* General class */
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
 
 /* Workaround for being unable to style modal in CritterContainer because
