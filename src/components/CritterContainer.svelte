@@ -6,6 +6,9 @@
 
     import Icons from "./Icons.svelte";
 
+    import ClockFill from "svelte-bootstrap-icons/lib/ClockFill.svelte";
+    import CalendarFill from "svelte-bootstrap-icons/lib/CalendarFill.svelte";
+
     import {
         addToStore,
         removeFromStore,
@@ -292,10 +295,27 @@
                 <img src={islandAvailable} alt="Tortimer Island all-year round" class="tortimer-island-icon"/>
             {/if}
             <img src={modalImage} class="modal-image" alt={modalName}/>
-            <h2>{modalName}</h2>
+            <h2 class="mt-1">{modalName}</h2>
             <p><em>{modalCatchQuote}</em></p>
-            <div>
-                <div>
+            <table>
+                <tr>
+                    <th>Price</th>
+                    <th>Location</th>
+                    {#if filters.crittertype !== "bug"}
+                        <th>Size</th>
+                    {/if}
+                </tr>
+                <tr>
+                    <td><img src={bellIcon} alt="bells" class="icon"/>{modalPrice}</td>
+                    <td>{modalLocation}</td>
+                    {#if filters.crittertype !== "bug"}
+                        <td>{modalSize}</td>
+                    {/if}
+                </tr>
+            </table>
+
+            <!-- <div>
+                <div class="center">
                     <img src={bellIcon} alt="bells" class="icon"/>
                     {modalPrice} Bells
                 </div>
@@ -309,9 +329,10 @@
                         {modalSize}
                     </div>
                 {/if}
-            </div>
-            <p class="nomargin">{modalMonths}</p>
-            <p class="nomargin">{modalTime}</p>
+            </div> -->
+            
+            <p class="nomargin center"><CalendarFill style="margin-right: .5em"/>{modalMonths}</p>
+            <p class="nomargin center"><ClockFill style="margin-right: .5em"/>{modalTime}</p>
         </div>
     </ModalBody>
 </Modal>
@@ -384,10 +405,22 @@
         overflow-wrap: break-word;
     }
 
+    .modal-body table {
+        margin-bottom: 1rem;
+        font-size: 1.1rem !important;
+    }
+
+    .modal-body td {
+        padding: 0 20px 0 20px;
+    }
+
     .modal-image {
-        width: 96px;
-        height: 96px;
+        width: 106px;
+        height: 106px;
+        padding: 10px;
         image-rendering: pixelated;
+        border: 5px dashed var(--bg-dark);
+        border-radius: 50%;
     }
 
     .icon {
