@@ -312,25 +312,7 @@
                         <td>{modalSize}</td>
                     {/if}
                 </tr>
-            </table>
-
-            <!-- <div>
-                <div class="center">
-                    <img src={bellIcon} alt="bells" class="icon"/>
-                    {modalPrice} Bells
-                </div>
-                <div>
-                    Location:
-                    {modalLocation}
-                </div>
-                {#if filters.crittertype !== "bug"}
-                    <div>
-                        Size:
-                        {modalSize}
-                    </div>
-                {/if}
-            </div> -->
-            
+            </table>            
             <p class="nomargin center"><CalendarFill style="margin-right: .5em"/>{modalMonths}</p>
             <p class="nomargin center"><ClockFill style="margin-right: .5em"/>{modalTime}</p>
         </div>

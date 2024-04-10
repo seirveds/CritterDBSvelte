@@ -70,16 +70,8 @@
     }
 </script>
 
-<div>
-    <div style="display: flex; float: right">
-        <button class={ filters.markAsCaught ? "filterbutton active" : "filterbutton" } on:click={() => markAsCaughtToggle()}>
-            <h6 class="mb-0 center">
-                <Icons name="caught" class="button-icon-small" style="margin-right: .3em" viewbox=128/>
-                Mark as caught
-            </h6>
-        </button>
-    </div>
-    <div style="display: flex; padding-left: 5em">
+<div style="display: flex; align-items: center; justify-content: center">
+    <div style="margin-left: 10%">
         <button class={ filters.crittertype == "fish" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("fish")}}>
             <Icons name="fish" class="filter-icon"/>
         </button>
@@ -92,8 +84,18 @@
             </button>
         {/if}
     </div>
-    <hr class="m-0">
+    <div style="margin-left: auto">
+        <button class={ filters.markAsCaught ? "filterbutton active" : "filterbutton" } on:click={() => markAsCaughtToggle()}>
+            <h6 class="mb-0 center">
+                <Icons name="caught" class="button-icon-small" style="margin-right: .3em" viewbox=128/>
+                Mark as caught
+            </h6>
+        </button>
+    </div>
+    
 </div>
+
+<hr style="margin-top: -1.1em; z-index: -1; position: relative">
 
 <div class="pt-3">
     <div class="center">
@@ -232,13 +234,23 @@
     }
 
     .navbutton {
+        margin: 0 -1em 0 0;
+        border: none;
+        border-radius: 50%;
+        background-color: var(--filter-tabs);
+        width: 4.5em;
+        height: 4.5em;
+        text-align: center;
+    }
+
+    /* .navbutton {
         padding: .5em 2em .5em 2em;
         border: none;
         border-radius: 10px 10px 0 0;
         background-color: var(--filter-tabs);
         width: 6em;
         text-align: center;
-    }
+    } */
 
     .navbutton.active {
         filter: brightness(85%);
