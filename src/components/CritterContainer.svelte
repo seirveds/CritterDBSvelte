@@ -331,7 +331,7 @@
     .scrollable-grid {
         overflow-x: auto;
         white-space: nowrap;
-        max-width: 70vw;
+        max-width: 80vw;
     }
 
     .grid {
@@ -344,6 +344,7 @@
         padding: 0px;
         column-gap: 0px;
         width: fit-content;
+        
     }
 
     .tile {
@@ -358,12 +359,21 @@
         transition: transform .1s; /* Animation for hover*/
     }
 
+    @media (max-width: 1280px) {
+        .tile {width: 75px; height: 75px;}
+        .scrollable-grid {max-width: 100vw;}
+    }
+    @media (max-width: 1200px) {
+        .tile {width: 70px; height: 70px;}
+        .scrollable-grid {max-width: 100vw;}
+    }    
+
     .tile:hover {
         cursor: pointer;
     }
 
     .tile:hover .critter-image {
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 
     .critter-image {
