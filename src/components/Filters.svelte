@@ -70,39 +70,38 @@
     }
 </script>
 
-<div style="display: flex; align-items: center; justify-content: center">
-    <div style="margin-left: 10%">
-        <button class={ filters.crittertype == "fish" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("fish")}}>
+<div class="filter-tabs">
+    <div class="left">
+        <button class={ filters.crittertype == "fish" ? "nav-button active" : "nav-button"} on:click={() => {navButtonClick("fish")}}>
             <Icons name="fish" class="filter-icon"/>
         </button>
-        <button class={ filters.crittertype == "bug" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("bug")}}>
+        <button class={ filters.crittertype == "bug" ? "nav-button active" : "nav-button"} on:click={() => {navButtonClick("bug")}}>
             <Icons name="bug" class="filter-icon"/>
         </button>
         {#if ["newhorizons", "newleaf"].includes(selectedGame)}
-            <button class={ filters.crittertype == "sea_creature" ? "navbutton active" : "navbutton"} on:click={() => {navButtonClick("sea_creature")}}>
+            <button class={ filters.crittertype == "sea_creature" ? "nav-button active" : "nav-button"} on:click={() => {navButtonClick("sea_creature")}}>
                 <Icons name="seacreature" class="filter-icon"/>
             </button>
         {/if}
     </div>
-    <div style="margin-left: auto">
-        <button class={ filters.markAsCaught ? "filterbutton active" : "filterbutton" } on:click={() => markAsCaughtToggle()}>
+    <div class="right">
+        <button class="caughtbutton { filters.markAsCaught ? 'filter-button active' : 'filter-button' }" on:click={() => markAsCaughtToggle()}>
             <h6 class="mb-0 center">
                 <Icons name="caught" class="button-icon-small" style="margin-right: .3em" viewbox=128/>
                 Mark as caught
             </h6>
         </button>
     </div>
-    
 </div>
 
 <hr style="margin-top: -1.1em; z-index: -1; position: relative">
 
-<div class="pt-3">
+<div class="pt-4">
     <div class="center">
-        <button class={filters.all ? "filterbutton active" : "filterbutton"} on:click={() => {filterButtonClick(true)}}>
+        <button class={filters.all ? "filter-button active" : "filter-button"} on:click={() => {filterButtonClick(true)}}>
             <h5 class="button-text center"><CalendarFill style="margin-right: .5em"/>All</h5>
         </button>
-        <button class={!filters.all && currentTime() === filters.time && currentMonth() === filters.month && !filters.ignoreTime ? "filterbutton active" : "filterbutton"} on:click={() => {filterButtonClick(false)}}>
+        <button class={!filters.all && currentTime() === filters.time && currentMonth() === filters.month && !filters.ignoreTime ? "filter-button active" : "filter-button"} on:click={() => {filterButtonClick(false)}}>
             <h5 class="button-text center"><CalendarEventFill style="margin-right: .5em"/>Current</h5>
         </button>
     </div>
@@ -120,19 +119,19 @@
         </div>
 
         <div class="center">
-            <button class={filters.ignoreTime ? "filterbutton active" : "filterbutton"} on:click={ignoreTimeToggle}>
+            <button class={filters.ignoreTime ? "filter-button active" : "filter-button"} on:click={ignoreTimeToggle}>
                 <h5 class="center"><ClockFill style="margin-right: .5em"/> Ignore time</h5>
             </button>
         </div>
 
         <div class="center mt-3">
-            <button class={filters.hideCaught ? "filterbutton active" : "filterbutton"} on:click={hideCaughtToggle}>
+            <button class={filters.hideCaught ? "filter-button active" : "filter-button"} on:click={hideCaughtToggle}>
                 <h5 class="center"><EyeSlashFill width=20 height=20 style="margin-right: .5em"/>Hide caught</h5>
             </button>
         </div>
         {#if selectedGame === "newleaf"}
             <div class="center mt-3">
-                <button class={filters.includeIsland ? "filterbutton active" : "filterbutton"} on:click={includeIslandToggle}>
+                <button class={filters.includeIsland ? "filter-button active" : "filter-button"} on:click={includeIslandToggle}>
                     <h5>Include Tortimer Island</h5>
                 </button>
             </div>
@@ -148,7 +147,20 @@
 </div>
 
 <style>
-    .filterbutton {
+    .filter-tabs {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 90vw;
+        margin: 0 auto;
+    }
+
+    .filter-tabs > .left,
+    .filter-tabs > .right {
+        flex: 0 1 auto;
+    }
+
+    .filter-button {
         border: 2px solid var(--button-dark);
         border-radius: 500px;
         background-color: rgba(0, 0, 0, 0);
@@ -158,30 +170,30 @@
         padding: 4px 6px 4px 6px;
     }
 
-    .filterbutton:hover {
+    .filter-button:hover {
         transform: scale(1.1);
         border-radius: 500px; /* Large for pill look */
     }
 
-    .filterbutton>h5,
-    .filterbutton>h6 {
+    .filter-button>h5,
+    .filter-button>h6 {
         margin: 0;
         padding: 0 10px 0 10px;  /* Override for h6 below */
         color: var(--text);
     }
 
     /* Padding override */
-    .filterbutton>h6 {
+    .filter-button>h6 {
         padding: 0 4px 0 4px !important;
     }
 
-    .filterbutton.active {
+    .filter-button.active {
         background-color: var(--button-dark);
         border-radius: 500px; /* Large for pill look */
     }
 
-    .filterbutton.active>h5,
-    .filterbutton.active>h6 {
+    .filter-button.active>h5,
+    .filter-button.active>h6 {
         color: var(--text-light);
     }
 
@@ -233,7 +245,7 @@
         cursor: pointer;
     }
 
-    .navbutton {
+    .nav-button {
         margin: 0 -1em 0 0;
         border: none;
         border-radius: 50%;
@@ -243,21 +255,24 @@
         text-align: center;
     }
 
-    /* .navbutton {
-        padding: .5em 2em .5em 2em;
-        border: none;
-        border-radius: 10px 10px 0 0;
-        background-color: var(--filter-tabs);
-        width: 6em;
-        text-align: center;
-    } */
+    @media (max-width: 430px) {
+        .nav-button { width: 3.5em; height: 3.5em; }
+        .caughtbutton > h6 { font-size: .8rem; }
+        .filter-tabs { max-width: 98vw; }
+        hr { margin-top: -.6em !important } 
+    }
 
-    .navbutton.active {
+    @media (max-width: 320px) {
+        .nav-button { width: 3em; height: 3em;}
+        
+    }
+
+    .nav-button.active {
         filter: brightness(85%);
         border-bottom: none;
     }
 
-    .navbutton:hover {
+    .nav-button:hover {
         filter: brightness(60%)
     }
 
