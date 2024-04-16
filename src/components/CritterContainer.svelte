@@ -82,7 +82,6 @@
         columns = Math.ceil(filteredCritters.length / rowCounts[selectedGame]);
 
         console.log(filteredCritters);
-
     };
 
     function checkTime(obj) {
@@ -289,7 +288,7 @@
     </div>
 </div>
 <Modal isOpen={modalOpen} toggle={toggleModal}>
-    <ModalBody>
+    <ModalBody style="padding: 0">
         <div class="modal-body">
             {#if selectedGame === "newleaf" && modalTortimerIsland}
                 <img src={islandAvailable} alt="Tortimer Island all-year round" class="tortimer-island-icon"/>
@@ -395,6 +394,9 @@
         align-items: center;
         text-align: center;
         overflow-wrap: break-word;
+        padding: 16px !important;
+        background-color: #fff5e6;
+        border-radius: 10px;
     }
 
     .modal-body table {
@@ -411,7 +413,7 @@
         height: 106px;
         padding: 10px;
         image-rendering: pixelated;
-        border: 5px dashed var(--bg-dark);
+        border: 5px dashed #e7d5b9;
         border-radius: 50%;
     }
 

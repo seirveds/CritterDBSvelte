@@ -259,12 +259,11 @@
         .nav-button { width: 3.5em; height: 3.5em; }
         .caughtbutton > h6 { font-size: .8rem; }
         .filter-tabs { max-width: 98vw; }
-        hr { margin-top: -.6em !important } 
+        hr { margin-top: -.6em !important }
     }
 
     @media (max-width: 320px) {
         .nav-button { width: 3em; height: 3em;}
-        
     }
 
     .nav-button.active {

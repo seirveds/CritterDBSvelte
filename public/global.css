@@ -17,17 +17,7 @@ p, a, label, select, span {
 font-family: critterDBFont !important;
 }
 
-:root {
-	--bg: #fff5e6;
-	--bg-dark: #e7d5b9;
-	--header: #588470;
-	--header-light: #f2f6f3;
-	--filter-tabs: #BDC49C;
-	--button-dark: #354238;
-	--text: #354238;
-	--text-light: #f2f6f3;
-  }
-
+/* Global color vars defined in App.svelte */
 html, body {
 	position: relative;
 	width: 100%;
@@ -35,8 +25,9 @@ html, body {
 }
 
 body {
-	color: var(--text) !important;
-	background-color: var(--bg) !important;
+	/* Set in App.svelte */
+	/* color: var(--text) !important;
+	background-color: var(--bg) !important; */
 	margin: 0;
 	padding: 8px;
 	box-sizing: border-box;
@@ -103,10 +94,10 @@ button:focus {
 
 /* Workaround for being unable to style modal in CritterContainer because
 of the way svelte components work */
-.modal-content {
+/* .modal-content {
 	background-color: var(--bg) !important;
 	border-color: var(--bg) !important;
-}
+} */
 
 .modal-dialog {
 	padding-top: 20vh !important;
