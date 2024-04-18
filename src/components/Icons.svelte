@@ -21,7 +21,7 @@
 </svg>
 <style>
     .filter-icon {
-        color: rgb(80, 80, 80);
+        color: var(--text);
     }
 
     .button-icon-small {

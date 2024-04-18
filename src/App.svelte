@@ -2,9 +2,9 @@
     import CritterContainer from "./components/CritterContainer.svelte";
     import Filters from "./components/Filters.svelte";
     import Header from "./components/Header.svelte";
-    
+
     import { currentMonth, currentTime} from "./utils"
-    
+
     export let selectedGame = "newhorizons";
     export let filters = {
         "crittertype": "fish",
@@ -17,12 +17,12 @@
         "hideCaught": false,
     };
 
-    export let darkMode = false;
+    export let darkMode = true;
 
 </script>
 
 <div class="main {darkMode ? 'dark' : 'light'}">
-    <Header bind:selectedGame/>
+    <Header bind:selectedGame bind:darkMode/>
 
     <CritterContainer bind:selectedGame bind:filters/>
 
@@ -52,10 +52,10 @@
         --bg: #2c2a27;
         --bg-dark: #141312;
         --header: #588470;
-        --header-light: #f2f6f3;
+        --header-light: #2c2a27;
         --filter-tabs: #BDC49C;
-        --button-dark: #354238;
-        --text: #354238;
-        --text-light: #f2f6f3;
+        --button-dark: #9aa79d;
+        --text: #9daa9f;
+        --text-light: #354238;
     }
 </style>
