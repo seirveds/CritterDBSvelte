@@ -10,7 +10,13 @@
         Dropdown
     } from 'sveltestrap';
 
+    import SunFill from "svelte-bootstrap-icons/lib/SunFill.svelte";
+    import MoonStarsFill from "svelte-bootstrap-icons/lib/MoonStarsFill.svelte";
+    import { Sun } from 'svelte-bootstrap-icons';
+
     export let selectedGame;
+    export let darkMode;
+
     let dropdownText = "New horizons";
 
     let dropdownOptions = [
@@ -25,15 +31,20 @@
         selectedGame = option["value"];
         dropdownText = option["text"];
     };
+
+    function toggleDarkMode() {
+        darkMode = !darkMode
+    }
 </script>
 
-<Navbar expand="md">
-    <Nav navbar>
-        <NavItem>
-            <NavLink href="/"><h3 class="name">CritterDB</h3></NavLink>
-        </NavItem>
-        <Dropdown nav setActiveFromChild>
-        <DropdownToggle nav class="nav-link" style="padding: 0; transform: translateY(50%); color: var(--text-light)" caret> {dropdownText} </DropdownToggle>
+<div class="header">
+    <div class="logo">
+        <h3 class="name">CritterDB</h3>
+    </div>
+    <Dropdown setActiveFromChild>
+        <DropdownToggle nav caret style="padding: 0; color: var(--text-light)" >
+            {dropdownText}
+        </DropdownToggle>
         <DropdownMenu>
             {#each dropdownOptions as option}
                 <DropdownItem on:click={() => selectOption(option)}>
@@ -41,11 +52,41 @@
                 </DropdownItem>
             {/each}
         </DropdownMenu>
-        </Dropdown>
-    </Nav>
-</Navbar>
+    </Dropdown>
+    <div style="margin-left: auto"/>
+    <button on:click={() => {toggleDarkMode()}}>
+        {#if darkMode}
+            <SunFill width="1.5rem" height="1.5rem"/>
+        {:else}
+            <MoonStarsFill width="1.1rem" height="1.1rem"/>
+        {/if}
+    </button>
+</div>
 
 <style>
+    .header {
+        display: flex;
+        align-items: center;
+        height: 4rem;
+        width: 100vw;
+        padding: 10px 20px;
+        margin: 0 2rem 0 0;
+        background-color: var(--header);
+    }
+
+    .header > button {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0px;
+        border-radius: 100%;
+        background-color: var(--text-light);
+        color: var(--text);
+    }
+
+    .header > button:hover {
+        transform: scale(1.1);
+    }
+
     .name {
         margin: 0 1em 0 0;
         color: var(--text-light);
