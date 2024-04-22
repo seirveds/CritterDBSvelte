@@ -51,11 +51,11 @@
     .dark {
         --bg: #2c2a27;
         --bg-dark: #141312;
-        --header: #588470;
+        --header: #23382f;
         --header-light: #2c2a27;
-        --filter-tabs: #BDC49C;
-        --button-dark: #9aa79d;
-        --text: #9daa9f;
+        --filter-tabs: #586138;
+        --button-dark: #88ac91;
+        --text: #e0ebe1;
         --text-light: #354238;
     }
 </style>

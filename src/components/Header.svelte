@@ -35,20 +35,24 @@
     function toggleDarkMode() {
         darkMode = !darkMode
     }
+
+    function darkModeTextColor() {
+        return "color: var(--text{darkMode ? '' : '-light'}"
+    }
 </script>
 
 <div class="header">
     <div class="logo">
-        <h3 class="name">CritterDB</h3>
+        <h3 class="name" style={darkModeTextColor()}>CritterDB</h3>
     </div>
     <Dropdown setActiveFromChild>
-        <DropdownToggle nav caret style="padding: 0; color: var(--text-light)" >
+        <DropdownToggle nav caret style={darkModeTextColor()}>
             {dropdownText}
         </DropdownToggle>
         <DropdownMenu>
             {#each dropdownOptions as option}
-                <DropdownItem on:click={() => selectOption(option)}>
-                {option["text"]}
+                <DropdownItem on:click={() => selectOption(option)} style="color: var(--text{darkMode ? '' : '-light'}">
+                    {option["text"]}
                 </DropdownItem>
             {/each}
         </DropdownMenu>
@@ -89,6 +93,6 @@
 
     .name {
         margin: 0 1em 0 0;
-        color: var(--text-light);
+        /* Color done inline */
     }
 </style>
