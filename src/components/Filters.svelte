@@ -71,7 +71,7 @@
 </script>
 
 <div class="filter-tabs">
-    <div class="left">
+    <div class="left" style="z-index: 1">
         <button class={ filters.crittertype == "fish" ? "nav-button active" : "nav-button"} on:click={() => {navButtonClick("fish")}}>
             <Icons name="fish" class="filter-icon"/>
         </button>
@@ -94,7 +94,7 @@
     </div>
 </div>
 
-<hr style="margin-top: -1.1em; z-index: -1; position: relative">
+<hr style="margin-top: -1.1em; position: relative">
 
 <div class="pt-4">
     <div class="center">
