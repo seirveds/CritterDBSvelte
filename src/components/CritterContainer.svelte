@@ -19,6 +19,7 @@
 
     export let selectedGame;
     export let filters;
+    export let darkMode;
 
     const bellIcon = "icons/bellbag.png";
     const islandExclusive = "icons/tortimer-island-exclusive.png";
@@ -254,7 +255,15 @@
             return active && !critterInStore(critterName, selectedGame);
         }
         return active;
-    }
+    };
+
+    function modalBodyStyle() {
+        if (darkMode) {
+            return "background-color: #2c2a27; color: #e0ebe1;"
+        } else {
+            return "background-color: #fff5e6; color: #354238;"
+        }
+    };
 </script>
 
 <div class="grid-container">
@@ -289,7 +298,7 @@
 </div>
 <Modal isOpen={modalOpen} toggle={toggleModal}>
     <ModalBody style="padding: 0">
-        <div class="modal-body">
+        <div class="modal-body" style={modalBodyStyle()}>
             {#if selectedGame === "newleaf" && modalTortimerIsland}
                 <img src={islandAvailable} alt="Tortimer Island all-year round" class="tortimer-island-icon"/>
             {/if}
@@ -388,6 +397,7 @@
     }
 
     /* Some modal styling done in globals.css */
+    /* Color and background color defined in modalBodyStyle() */
     .modal-body {
         display: flex;
         flex-direction: column;
@@ -395,8 +405,7 @@
         text-align: center;
         overflow-wrap: break-word;
         padding: 16px !important;
-        background-color: #fff5e6;
-        border-radius: 10px;
+        border-radius: 10px !important;
     }
 
     .modal-body table {

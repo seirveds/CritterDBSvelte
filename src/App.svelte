@@ -24,7 +24,7 @@
 <div class="main {darkMode ? 'dark' : 'light'}">
     <Header bind:selectedGame bind:darkMode/>
 
-    <CritterContainer bind:selectedGame bind:filters/>
+    <CritterContainer bind:selectedGame bind:filters bind:darkMode/>
 
     <Filters bind:selectedGame bind:filters/>
 </div>

@@ -105,6 +105,11 @@ of the way svelte components work */
 	padding-bottom: auto !important;
 }
 
+.modal-content {
+	/* Large radius so modal-body will overlap */
+	border-radius: 30em !important;
+}
+
 /* Idem as above for navbar */
 .navbar {
 	background-color: var(--header) !important;
