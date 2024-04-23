@@ -17,7 +17,7 @@
         "hideCaught": false,
     };
 
-    export let darkMode = true;
+    export let darkMode = false;
 
 </script>
 

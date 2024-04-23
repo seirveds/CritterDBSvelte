@@ -1,23 +1,12 @@
 <script>
-    import {
-        DropdownItem,
-        DropdownMenu,
-        DropdownToggle,
-        Nav,
-        NavItem,
-        NavLink,
-        Navbar,
-        Dropdown
-    } from 'sveltestrap';
-
     import SunFill from "svelte-bootstrap-icons/lib/SunFill.svelte";
     import MoonStarsFill from "svelte-bootstrap-icons/lib/MoonStarsFill.svelte";
-    import { Sun } from 'svelte-bootstrap-icons';
 
     export let selectedGame;
     export let darkMode;
 
     let dropdownText = "New horizons";
+    let dropdownExpanded = false;
 
     let dropdownOptions = [
         {"value": "newhorizons", "text": "New Horizons"},
@@ -30,33 +19,49 @@
     function selectOption(option) {
         selectedGame = option["value"];
         dropdownText = option["text"];
+        dropdownExpanded = false;
     };
 
     function toggleDarkMode() {
         darkMode = !darkMode
-    }
+    };
 
     function darkModeTextColor() {
-        return "color: var(--text{darkMode ? '' : '-light'}"
-    }
+        return `color: var(--text${darkMode ? '' : '-light'})`
+    };
+
+    function toggleDropdown() {
+        dropdownExpanded = !dropdownExpanded;
+    };
+
+    /* Click listener to make opened dropdown close on click outside dropdown */
+    function clickOutsideDropdown(event) {
+        const dropdown = document.querySelector('.dropdown');
+        if (dropdownExpanded && !dropdown.contains(event.target)) {
+            toggleDropdown()
+        };
+    };
+    window.addEventListener('click', clickOutsideDropdown);
 </script>
 
 <div class="header">
-    <div class="logo">
-        <h3 class="name" style={darkModeTextColor()}>CritterDB</h3>
-    </div>
-    <Dropdown setActiveFromChild>
-        <DropdownToggle nav caret style={darkModeTextColor()}>
-            {dropdownText}
-        </DropdownToggle>
-        <DropdownMenu>
-            {#each dropdownOptions as option}
-                <DropdownItem on:click={() => selectOption(option)} style="color: var(--text{darkMode ? '' : '-light'}">
-                    {option["text"]}
-                </DropdownItem>
-            {/each}
-        </DropdownMenu>
-    </Dropdown>
+    {#key darkMode}
+        <div class="logo">
+            <h3 class="name" style={darkModeTextColor()}>CritterDB</h3>
+        </div>
+        <div class="dropdown">
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <p class="mb-0" style={darkModeTextColor()} on:click={() => toggleDropdown()}>{dropdownText}{dropdownExpanded ? '▴' : '▾'}</p>
+            <div class="dropdown-content" style="display: {dropdownExpanded ? 'block' : 'none'}">
+                <ul>
+                    {#each dropdownOptions as option}
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <li on:click={() => selectOption(option)}>{option["text"]}</li>
+                    {/each}
+                </ul>
+            </div>
+        </div>
+    {/key}
     <div style="margin-left: auto"/>
     <button on:click={() => {toggleDarkMode()}}>
         {#if darkMode}
@@ -94,5 +99,38 @@
     .name {
         margin: 0 1em 0 0;
         /* Color done inline */
+    }
+
+    .dropdown-content {
+        position: absolute;
+        inset: 0px auto auto 0px;
+        margin: 0px;
+        transform: translate3d(0px, 26px, 0px);
+
+        background-color: var(--bg);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border: 0px;
+        border-radius: 5px;
+        white-space: nowrap;
+
+        padding: .5rem 1rem;
+
+        z-index: 999;
+    }
+
+    .dropdown-content > ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .dropdown-content > ul > li {
+        margin-bottom: .4rem;
+    }
+
+    .dropdown > p:hover,
+    .dropdown-content > ul > li:hover {
+        cursor: pointer;
+        text-decoration: underline;
     }
 </style>
