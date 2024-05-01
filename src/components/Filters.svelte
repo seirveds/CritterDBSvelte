@@ -197,13 +197,20 @@
         color: var(--text-light);
     }
 
-    .range-container-parent {
-        justify-content: space-around !important;
-        margin: 1.5rem 0;
+    .range-container {
+        width: 15em;
+        margin: 2.5em;
     }
 
-    .range-container {
-        width: 40%;
+    @media (max-width: 420px) {
+        .range-container-parent {
+            justify-content: space-around !important;
+        }
+
+        .range-container {
+            width: 40%;
+            margin: 2.5em 0;
+        }
     }
 
     .range-slider {
