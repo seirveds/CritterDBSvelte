@@ -1,6 +1,7 @@
 <script>
     import CritterContainer from "./components/CritterContainer.svelte";
     import Filters from "./components/Filters.svelte";
+    import Footer from "./components/Footer.svelte";
     import Header from "./components/Header.svelte";
 
     import { currentMonth, currentTime} from "./utils"
@@ -27,6 +28,8 @@
     <CritterContainer bind:selectedGame bind:filters bind:darkMode/>
 
     <Filters bind:selectedGame bind:filters/>
+
+    <Footer/>
 </div>
 
 <style>

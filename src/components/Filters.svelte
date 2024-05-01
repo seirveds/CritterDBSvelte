@@ -96,7 +96,7 @@
 
 <hr style="margin-top: -1.1em; position: relative">
 
-<div class="pt-4">
+<div class="pt-4 pb-5">
     <div class="center">
         <button class={filters.all ? "filter-button active" : "filter-button"} on:click={() => {filterButtonClick(true)}}>
             <h5 class="button-text center"><CalendarFill style="margin-right: .5em"/>All</h5>
