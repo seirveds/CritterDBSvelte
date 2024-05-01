@@ -85,6 +85,7 @@
 
     .header > button {
         width: 2.5rem;
+        min-width: 2.5rem;
         height: 2.5rem;
         border: 0px;
         border-radius: 100%;

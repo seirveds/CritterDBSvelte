@@ -107,7 +107,7 @@
     </div>
 
     {#if !filters.all}
-        <div class="center">
+        <div class="center range-container-parent">
             <div class="range-container">
                 <h3 class="mb-0">{monthNames[filters.month]}</h3>
                 <input type="range" id="month" name="month" class="range-slider" min="1" max="12" bind:value={filters.month}/>
@@ -197,9 +197,13 @@
         color: var(--text-light);
     }
 
+    .range-container-parent {
+        justify-content: space-around !important;
+        margin: 1.5rem 0;
+    }
+
     .range-container {
-        width: 15em;
-        margin: 2.5em;
+        width: 40%;
     }
 
     .range-slider {
