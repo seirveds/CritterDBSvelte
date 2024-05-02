@@ -443,4 +443,19 @@
         height: 1.5em;
         image-rendering: pixelated;
     }
+
+    
+    ::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        border-radius: 0;
+        background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: var(--button-dark);
+    }
 </style>

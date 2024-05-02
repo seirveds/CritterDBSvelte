@@ -77,9 +77,9 @@
         display: flex;
         align-items: center;
         height: 4rem;
-        width: 100vw;
+        width: 100%;
         padding: 10px 20px;
-        margin: 0 2rem 0 0;
+        margin: 0;
         background-color: var(--header);
     }
 

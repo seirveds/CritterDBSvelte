@@ -119,17 +119,3 @@ of the way svelte components work */
 .dropdown-menu {
 	background-color: var(--header-light) !important;
 }
-
-::-webkit-scrollbar {
-	height: 8px;
-}
-  
-::-webkit-scrollbar-track {
-	border-radius: 0;
-	background: var(--bg);
-}
-
-::-webkit-scrollbar-thumb {
-	border-radius: 5px;
-	background: var(--button-dark);
-}
