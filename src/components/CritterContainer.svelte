@@ -81,8 +81,6 @@
 
         rows = rowCounts[selectedGame];
         columns = Math.ceil(filteredCritters.length / rowCounts[selectedGame]);
-
-        console.log(filteredCritters);
     };
 
     function checkTime(obj) {
@@ -91,16 +89,28 @@
         if (selectedGame === "newleaf" && filters.includeIsland) {
             let fallback = obj.time_available[Object.keys(obj.time_available)[0]]
             return obj_get(obj.time_available, filters.month, fallback).includes(filters.time);
+        } else if (selectedGame === "newhorizons" && !filters.northernHemisphere) {
+            return obj_get(obj.time_available, wrapMonth(filters.month), []).includes(filters.time);
         } else {
             return obj_get(obj.time_available, filters.month, []).includes(filters.time);
         }
     };
+
+    function wrapMonth(month) {
+        // Used for swapping around hemispheres
+        if (month <= 6) {
+            return month + 6
+        }
+        return month - 6
+    }
 
     function checkDate(obj) {
         // New leaf tortimer island workaround, ignore time of year for critters
         // that also spawn on tortimer island
         if (selectedGame === "newleaf") {
             return filters.includeIsland ? obj.months_available.includes(filters.month) || obj.tortimer_island : obj.months_available.includes(filters.month) && !obj.tortimer_island_exclusive
+        } else if (selectedGame === "newhorizons" && !filters.northernHemisphere) {           
+            return obj.months_available.includes(wrapMonth(filters.month))
         } else {  // Clean logic
             return obj.months_available.includes(filters.month);
         }
@@ -193,10 +203,13 @@
             return monthNames[months_available[0]]
         }
 
+        // Handle flip months around for New Horizons southern hemisphere
+        if (selectedGame === "newhorizons" && !filters.northernHemisphere) {
+            months_available = months_available.map((m) => wrapMonth(m));
+        }
+
         // Sort the adjusted array in ascending order
         months_available.sort((a, b) => a - b);
-
-        console.log(months_available)
 
         let monthRanges = [];
         let rangeStartMonth = months_available[0];

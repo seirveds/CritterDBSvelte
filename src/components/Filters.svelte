@@ -5,6 +5,7 @@
 
     import CalendarFill from "svelte-bootstrap-icons/lib/CalendarFill.svelte";
     import CalendarEventFill from "svelte-bootstrap-icons/lib/CalendarEventFill.svelte";
+    import CircleHalf from "svelte-bootstrap-icons/lib/CircleHalf.svelte";
     import ClockFill from "svelte-bootstrap-icons/lib/ClockFill.svelte";
     import EyeSlashFill from "svelte-bootstrap-icons/lib/EyeSlashFill.svelte";
 
@@ -66,8 +67,12 @@
             toast("Click on critters to (un)set them as caught", {icon: "💭"})
         }
         filters.markAsCaught = !filters.markAsCaught;
-        
     }
+
+    function hemisphereToggle(value) {
+        filters.northernHemisphere = value;
+    }
+
 </script>
 
 <div class="filter-tabs">
@@ -85,7 +90,7 @@
         {/if}
     </div>
     <div class="right">
-        <button class="caughtbutton { filters.markAsCaught ? 'filter-button active' : 'filter-button' }" on:click={() => markAsCaughtToggle()}>
+        <button class="caughtbutton { filters.markAsCaught ? 'filter-button active' : 'filter-button' }" on:click={markAsCaughtToggle}>
             <h6 class="mb-0 center">
                 <Icons name="caught" class="button-icon-small" style="margin-right: .3em" viewbox=128/>
                 Mark as caught
@@ -96,7 +101,7 @@
 
 <hr style="margin-top: -1.1em; position: relative">
 
-<div class="pt-4 pb-5">
+<div class="pt-3 pb-4">
     <div class="center">
         <button class={filters.all ? "filter-button active" : "filter-button"} on:click={() => {filterButtonClick(true)}}>
             <h5 class="button-text center"><CalendarFill style="margin-right: .5em"/>All</h5>
@@ -124,13 +129,23 @@
             </button>
         </div>
 
-        <div class="center mt-3">
+        <div class="center mt-2">
             <button class={filters.hideCaught ? "filter-button active" : "filter-button"} on:click={hideCaughtToggle}>
                 <h5 class="center"><EyeSlashFill width=20 height=20 style="margin-right: .5em"/>Hide caught</h5>
             </button>
         </div>
+        {#if selectedGame === "newhorizons"}
+            <div class="center mt-2">
+                <button class={filters.northernHemisphere ? "filter-button active" : "filter-button"} on:click={() => {hemisphereToggle(true)}}>
+                    <h5><CircleHalf style="vertical-align: unset; margin-right: .5em; transform: rotate(90deg)"/>North</h5>
+                </button>
+                <button class={!filters.northernHemisphere ? "filter-button active" : "filter-button"} on:click={() => {hemisphereToggle(false)}}>
+                    <h5><CircleHalf style="vertical-align: unset; margin-right: .5em; transform: rotate(-90deg)"/>South</h5>
+                </button>
+            </div>
+        {/if}
         {#if selectedGame === "newleaf"}
-            <div class="center mt-3">
+            <div class="center mt-2">
                 <button class={filters.includeIsland ? "filter-button active" : "filter-button"} on:click={includeIslandToggle}>
                     <h5>Include Tortimer Island</h5>
                 </button>
@@ -199,7 +214,7 @@
 
     .range-container {
         width: 15em;
-        margin: 2.5em;
+        margin: 2em 2.5em;
     }
 
     @media (max-width: 420px) {

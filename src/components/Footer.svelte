@@ -16,6 +16,6 @@
 		display: flex;
 		flex-direction: column;
 		font-size: .8rem;
-		padding-bottom: 1rem;
+		padding-bottom: 0rem;
 	}
 </style>

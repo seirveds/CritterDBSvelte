@@ -16,6 +16,7 @@
         "includeIsland": false,
         "markAsCaught": false,
         "hideCaught": false,
+        "northernHemisphere": true,
     };
 
     export let darkMode = false;
