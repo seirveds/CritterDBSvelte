@@ -2,8 +2,6 @@
 	import Github from "svelte-bootstrap-icons/lib/Github.svelte";
 
 	let year = new Date().getFullYear();
-
-	console.log(year);
 </script>
 
 <div class="footer center">

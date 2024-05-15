@@ -86,14 +86,19 @@
     function checkTime(obj) {
         // New leaf tortimer island workaround, get the first possible availability
         // when there is nothing for current month
+        let timeArray = [];
         if (selectedGame === "newleaf" && filters.includeIsland) {
             let fallback = obj.time_available[Object.keys(obj.time_available)[0]]
-            return obj_get(obj.time_available, filters.month, fallback).includes(filters.time);
+            timeArray = obj_get(obj.time_available, filters.month, fallback);
         } else if (selectedGame === "newhorizons" && !filters.northernHemisphere) {
-            return obj_get(obj.time_available, wrapMonth(filters.month), []).includes(filters.time);
+            timeArray = obj_get(obj.time_available, wrapMonth(filters.month), []);
         } else {
-            return obj_get(obj.time_available, filters.month, []).includes(filters.time);
+            timeArray = obj_get(obj.time_available, filters.month, []);
         }
+        // Because final value of time array is exclusive, we want to make
+        // sure its not the final hour in a range
+        let timesToCheck = [filters.time, filters.time === 23 ? 0 : filters.time + 1]
+        return timesToCheck.every(value => timeArray.includes(value));
     };
 
     function wrapMonth(month) {
@@ -109,7 +114,7 @@
         // that also spawn on tortimer island
         if (selectedGame === "newleaf") {
             return filters.includeIsland ? obj.months_available.includes(filters.month) || obj.tortimer_island : obj.months_available.includes(filters.month) && !obj.tortimer_island_exclusive
-        } else if (selectedGame === "newhorizons" && !filters.northernHemisphere) {           
+        } else if (selectedGame === "newhorizons" && !filters.northernHemisphere) {
             return obj.months_available.includes(wrapMonth(filters.month))
         } else {  // Clean logic
             return obj.months_available.includes(filters.month);
