@@ -123,8 +123,6 @@
 
     function toggleModal(critter) {
         if (!modalOpen) {
-            console.log(critter);
-
             modalTortimerIsland = critter.tortimer_island
             modalName = critter.name;
             modalImage = prepareImage(critter.b64_img);
