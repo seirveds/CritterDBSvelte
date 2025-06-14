@@ -28,7 +28,7 @@
     };
 
     const islandExclusive = "icons/tortimer-island-exclusive.png";
-    const islandAvailable = "icons/tortimer-island-available.png"
+    const islandAvailable = "icons/tortimer-island-available.png";
 
     function filterButtonClick(bool) {
         // Make sure clicking current resets time and month to now

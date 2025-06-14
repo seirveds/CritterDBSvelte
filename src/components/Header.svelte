@@ -16,6 +16,11 @@
         {"value": "animalcrossing", "text": "Population Growing"},
     ];
 
+    $: setDropdownTextFromStore(selectedGame)
+    function setDropdownTextFromStore() {
+        dropdownText = dropdownOptions.find(option => option.value === selectedGame)["text"];
+    }
+
     function selectOption(option) {
         selectedGame = option["value"];
         dropdownText = option["text"];

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "rollup -c",
+    "build:gh-pages": "GITHUB_PAGES=true rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "svelte-check": "svelte-check"

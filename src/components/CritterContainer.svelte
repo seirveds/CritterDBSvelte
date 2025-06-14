@@ -10,10 +10,9 @@
     import CalendarFill from "svelte-bootstrap-icons/lib/CalendarFill.svelte";
 
     import {
-        addToStore,
-        removeFromStore,
-        logStore,
-        critterInStore,
+        addToCaughtStore,
+        removeFromCaughtStore,
+        critterInCaughtStore,
     } from "../store";
     import critters from "../assets/critters2.json";
 
@@ -24,6 +23,7 @@
     const bellIcon = "icons/bellbag.png";
     const islandExclusive = "icons/tortimer-island-exclusive.png";
     const islandAvailable = "icons/tortimer-island-available.png"
+    const caughtStore = "caught"
 
     const rowCounts = {
         "newhorizons": 5,
@@ -250,12 +250,11 @@
 
     function gridIconClick(critter) {
         if (filters.markAsCaught) {
-            if (critterInStore(critter.name, selectedGame)) {
-                removeFromStore(critter.name, selectedGame);
+            if (critterInCaughtStore(critter.name, selectedGame, caughtStore)) {
+                removeFromCaughtStore(critter.name, selectedGame, caughtStore);
             } else {
-                addToStore(critter.name, selectedGame);
+                addToCaughtStore(critter.name, selectedGame, caughtStore);
             }
-            logStore();
             // Flip boolean to trigger {key} around grid, making it refresh
             registerClick = !registerClick;
         } else {
@@ -268,7 +267,7 @@
             return true;
         }
         if (filters.hideCaught) {
-            return active && !critterInStore(critterName, selectedGame);
+            return active && !critterInCaughtStore(critterName, selectedGame, caughtStore);
         }
         return active;
     };
@@ -287,7 +286,7 @@
         {#key registerClick}
             <div class="grid" style="grid-template-columns: repeat({columns}, 1fr); grid-template-rows: repeat({rows}, 1fr);">
                 {#each filteredCritters as critter}
-                    <div class={critterInStore(critter.name, selectedGame) && !filters.hideCaught ? "tile caught" : "tile"}>
+                    <div class={critterInCaughtStore(critter.name, selectedGame, caughtStore) && !filters.hideCaught ? "tile caught" : "tile"}>
                         <div style={showCritterInGrid(critter.active, critter.name) ? "" : "opacity: 0.1;"}>
                             <!-- svelte-ignore a11y-click-events-have-key-events -->
                             <img
@@ -303,7 +302,7 @@
                                 <img src={islandExclusive} alt="Tortimer island exclusive" class="grid-tortimer-island-icon"/>
                             {/if}
                         </div>
-                        {#if critterInStore(critter.name, selectedGame)}
+                        {#if critterInCaughtStore(critter.name, selectedGame, caughtStore)}
                             <Icons name="caught" class="grid-caught-icon" viewbox=128/>
                         {/if}
                     </div>

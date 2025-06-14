@@ -1,12 +1,20 @@
 <script>
+    import { onMount } from "svelte";
     import CritterContainer from "./components/CritterContainer.svelte";
     import Filters from "./components/Filters.svelte";
     import Footer from "./components/Footer.svelte";
     import Header from "./components/Header.svelte";
 
     import { currentMonth, currentTime} from "./utils"
+    import {
+        updateKeyValueStore,
+        getFromValueStore,
+        logStore,
+        checkIfStoreExists,
+        initializeStore,
+    } from "./store";
 
-    export let selectedGame = "newhorizons";
+    export let selectedGame = getFromValueStore("selectedGame", filterStore);
     export let filters = {
         "crittertype": "fish",
         "month": currentMonth(),
@@ -20,6 +28,27 @@
     };
 
     export let darkMode = false;
+
+    const filterStore = "filters";
+
+    onMount(() => {
+        if (!checkIfStoreExists(filterStore)) {
+            initializeStore(filterStore, {
+                "selectedGame": "newhorizons"
+            })
+            selectedGame = "newhorizons";
+        }
+        logStore(filterStore);
+        console.log(1)
+        selectedGame = getFromValueStore("selectedGame", filterStore);
+    })
+
+    $: saveSelectedGame(selectedGame)
+    function saveSelectedGame() {
+        updateKeyValueStore("selectedGame", selectedGame, filterStore);
+        logStore(filterStore)
+        console.log(2)
+    }
 
 </script>
 

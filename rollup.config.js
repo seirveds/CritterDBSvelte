@@ -30,13 +30,19 @@ function serve() {
 	};
 }
 
+const ghPages = process.env.GITHUB_PAGES === 'true';
+const base = ghPages ? '/CritterDBSvelte/' : '';
+
 export default {
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: 'public/build/bundle.js'
+		file: 'public/build/bundle.js',
+		paths: {
+			'svelte': ghPages ? base + 'svelte' : 'svelte'
+		}
 	},
 	plugins: [
 		svelte({
