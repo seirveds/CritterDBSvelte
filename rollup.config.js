@@ -31,7 +31,7 @@ function serve() {
 }
 
 const ghPages = process.env.GITHUB_PAGES === 'true';
-const base = ghPages ? '/CritterDBSvelte/' : '';
+const base = ghPages ? '/CritterDBSvelte' : '';
 
 export default {
 	input: 'src/main.js',
@@ -41,7 +41,7 @@ export default {
 		name: 'app',
 		file: 'public/build/bundle.js',
 		paths: {
-			'svelte': ghPages ? base + 'svelte' : 'svelte'
+			'svelte': ghPages ? base + '/svelte' : 'svelte'
 		}
 	},
 	plugins: [
